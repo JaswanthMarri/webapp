@@ -10,13 +10,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/v1")
+//@RequestMapping("/v1")
 public class WebAppController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/user")
+    @GetMapping("/healthz")
+    public ResponseEntity<Void> dbHealthCheck() {
+        return userService.HealthCheckService();
+    }
+    @PostMapping("/v1/user")
     public ResponseEntity<UserResponse> createUser(@RequestBody UserDTO createUserRequest) {
         // Implement logic to handle user registration
         UserResponse createdUser = null;
@@ -28,16 +32,16 @@ public class WebAppController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    @GetMapping("/user")
-    @PutMapping("/user")
-    @PostMapping("/user/self")
-    @DeleteMapping({"/user","/user/self"})
-    @PatchMapping({"/user","/user/self"})
+    @GetMapping("/v1/user")
+    @PutMapping({"/v1/user","/healthz"})
+    @PostMapping({"/v1/user/self","/healthz"})
+    @DeleteMapping({"/v1/user","/v1/user/self","/healthz"})
+    @PatchMapping({"/v1/user","/v1/user/self","/healthz"})
     public ResponseEntity<Void> handleUnsupportedMethods() {
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).headers(userService.noCacheHeaders()).build();
     }
 
-    @PutMapping("/user/self")
+    @PutMapping("/v1/user/self")
     public ResponseEntity<String> updateUser(@RequestBody UserDTO updateUserRequest) {
         if(!userService.updateUser(updateUserRequest)){
             return ResponseEntity.badRequest().build();
@@ -45,7 +49,7 @@ public class WebAppController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/user/self")
+    @GetMapping("/v1/user/self")
     public ResponseEntity<UserResponse> getUser() {
         UserResponse user =userService.getUser();
         return new ResponseEntity<UserResponse>( user,HttpStatus.OK);
