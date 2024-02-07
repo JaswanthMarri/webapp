@@ -20,7 +20,6 @@ jobs:
       - name: Build and test (Maven example)
         run: mvn test      # Replace with your test command (Gradle: ./gradlew test)
 
-
     outputs:
       build_status: ${{ process.exitCode }}
 
@@ -33,7 +32,6 @@ jobs:
         with:
           comment: Build checks finished!
           context: CI
-          state: ${{ needs.build.outputs.build_status == 0 ? 'success' : 'failure' }}
-          description: ${{ needs.build.outputs.build_status == 0 ? 'Build and tests passed!' : 'Build or tests failed!' }}
+          state: ${{ needs.build.outputs.build_status == 0 ? 'success' :'failure' }}
+          description: ${{ needs.build.outputs.build_status == 0 ? 'Build and tests passed!' :'Build or tests failed!' }}
           fail_on_skipped: true  # Fail checks if build job is skipped
-
