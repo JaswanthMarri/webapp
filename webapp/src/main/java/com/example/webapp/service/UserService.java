@@ -9,13 +9,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.sql.DataSource;
-
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,7 +22,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService, UserDetailsPasswordService {
 
   private final UserAccountRepo userRepo;
   private final Utils utils;
@@ -37,7 +36,6 @@ public class UserService implements UserDetailsService {
     this.passwordEncoder = passwordEncoder;
     this.ds = ds;
   }
-
 
   public ResponseEntity<Void> HealthCheckService() {
     try (Connection conn = ds.getConnection()) {
@@ -93,5 +91,11 @@ public class UserService implements UserDetailsService {
     headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
     headers.add("Pragma", "no-cache");
     return headers;
+  }
+
+  @Override
+  public UserDetails updatePassword(UserDetails user, String newPassword) {
+    UserAccount userAccount = userRepo.findByUsername(user.getUsername());
+    return userAccount;
   }
 }
