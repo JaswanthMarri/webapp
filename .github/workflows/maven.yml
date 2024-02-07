@@ -20,11 +20,6 @@ jobs:
       - name: Build and test (Maven example)
         run: mvn test      # Replace with your test command (Gradle: ./gradlew test)
 
-      - name: Upload test report (optional)
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-report
-          path: target/surefire-reports/TEST*.xml  # Replace with your report path
 
     outputs:
       build_status: ${{ process.exitCode }}
