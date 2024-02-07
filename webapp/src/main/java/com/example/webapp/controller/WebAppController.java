@@ -6,9 +6,10 @@ import com.example.webapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/v1")
 public class WebAppController {
 
@@ -18,18 +19,36 @@ public class WebAppController {
     @PostMapping("/user")
     public ResponseEntity<UserResponse> createUser(@RequestBody UserDTO createUserRequest) {
         // Implement logic to handle user registration
+        UserResponse createdUser = null;
+        try{
+        createdUser = userService.createUser(createUserRequest);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/user")
+    @PutMapping("/user")
+    @PostMapping("/user/self")
+    @DeleteMapping({"/user","/user/self"})
+    @PatchMapping({"/user","/user/self"})
+    public ResponseEntity<Void> handleUnsupportedMethods() {
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).headers(userService.noCacheHeaders()).build();
     }
 
     @PutMapping("/user/self")
-    public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody UserDTO updateUserRequest) {
-        // Implement logic to handle user update
+    public ResponseEntity<String> updateUser(@RequestBody UserDTO updateUserRequest) {
+        if(!userService.updateUser(updateUserRequest)){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/user/self")
     public ResponseEntity<UserResponse> getUser() {
-        // Implement logic to retrieve user information
-
-        return new ResponseEntity<UserResponse>( HttpStatus.OK);
+        UserResponse user =userService.getUser();
+        return new ResponseEntity<UserResponse>( user,HttpStatus.OK);
     }
 }
 
