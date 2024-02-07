@@ -98,7 +98,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private final UserService userService;
   private final BCryptPasswordEncoder passwordEncoder;
 
-
   @Override
   protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
