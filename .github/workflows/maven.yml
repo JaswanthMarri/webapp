@@ -38,7 +38,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
-  # steps:
+    steps:
   #   - name: Checkout code
   #     uses: actions/checkout@v2
 
@@ -59,8 +59,8 @@ jobs:
     # - name: Check if feature branch is up to date with main
     #   run: git merge-base --is-ancestor origin/main HEAD
 
-    # - name: Merge only if checks are successful
-    #   if: success()
-    #   run: echo "All checks passed. You can now merge the pull request."
+      - name: Merge only if checks are successful
+        if: success()
+        run: echo "All checks passed. You can now merge the pull request."
 
       
