@@ -37,4 +37,4 @@ jobs:
       - name: Merge only if checks are successful
         if: success()
         run: echo "All checks passed. You can now merge the pull request."
-
+        
