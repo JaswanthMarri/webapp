@@ -9,9 +9,8 @@ on:
 
 jobs:
   build:
-
+    name: build
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -25,13 +24,13 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file ./webapp/pom.xml
 
-  merge-check:
-    name: Merge Check
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Merge only if checks are successful
-        if: success()
-        run: echo "All checks passed. You can now merge the pull request."
+  # merge-check:
+  #   name: Merge Check
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Merge only if checks are successful
+  #       if: success()
+  #       run: echo "All checks passed. You can now merge the pull request."
 
 
