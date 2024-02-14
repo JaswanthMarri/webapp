@@ -41,6 +41,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     log.info(password);
     log.info(passwordEncoder.encode(password));
     UserAccount ua = userRepo.findByUsername(username);
+    //log.info(ua.getPassword());
     if (ua.equals(null) || !passwordEncoder.matches( password, ua.getPassword())){ //ua.getPassword() != password) {
       //log.info(ua.getPassword());
       throw new AuthenticationServiceException(username);
