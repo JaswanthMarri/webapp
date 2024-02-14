@@ -3,13 +3,19 @@ package com.example.webapp.controller;
 import com.example.webapp.dto.UserDTO;
 import com.example.webapp.dto.UserResponse;
 import com.example.webapp.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
+@Validated
+@Slf4j
 public class WebAppController {
 
     @Autowired
@@ -20,7 +26,7 @@ public class WebAppController {
         return userService.HealthCheckService();
     }
     @PostMapping("/v1/user")
-    public ResponseEntity<UserResponse> createUser(@RequestBody UserDTO createUserRequest) {
+    public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserDTO createUserRequest) {
         // Implement logic to handle user registration
         UserResponse createdUser = null;
         try{
@@ -41,7 +47,7 @@ public class WebAppController {
     }
 
     @PutMapping("/v1/user/self")
-    public ResponseEntity<String> updateUser(@RequestBody UserDTO updateUserRequest) {
+    public ResponseEntity<String> updateUser(@RequestBody @Valid UserDTO updateUserRequest) {
         if(!userService.updateUser(updateUserRequest)){
             return ResponseEntity.badRequest().build();
         }
