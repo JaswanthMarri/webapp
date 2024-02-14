@@ -67,7 +67,7 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
     if (user != null
         && userReq.getUsername().toLowerCase().equals(user.getUsername().toLowerCase())) {
       //      UserAccount updatedUser = utils.convertUserDTOToEntity(userReq);
-      user.setPassword(userReq.getPassword());
+      user.setPassword(passwordEncoder.encode(userReq.getPassword()));
       user.setLastName(userReq.getLastName());
       user.setFirstName(userReq.getFirstName());
       userRepo.save(user);
