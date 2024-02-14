@@ -2,10 +2,10 @@ name: Java CI with Maven
 
 on:
   pull_request:
-    # branches: [ "main" ]
+    branches: [ "main" ]
     types: [opened, reopened]
-    # paths:
-    #   - 'JaswanthMarri/webapp/**'
+    paths:
+      - 'JaswanthMarri/webapp/**'
 
 jobs:
   build:
