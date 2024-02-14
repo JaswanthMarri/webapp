@@ -7,7 +7,9 @@ on:
       - synchronize
     branches:
       - main
+      
 jobs:
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -25,6 +27,7 @@ jobs:
         run: mvn -B package --file ./webapp/pom.xml
       - name: Check if compilation was successful
         run: mvn compile
+        
   merge-check:
     name: Merge Check
     needs: build
@@ -33,3 +36,4 @@ jobs:
       - name: Merge only if checks are successful
         if: success()
         run: echo "All checks passed. You can now merge the pull request."
+
