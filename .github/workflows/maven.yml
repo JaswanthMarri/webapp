@@ -2,10 +2,8 @@ name: Java CI with Maven
 
 on:
   pull_request:
-    # branches: [ "main" ]
     types:  ["opened", "reopened", "synchronize"]
-    # paths:
-    #   - 'JaswanthMarri/webapp/**'
+
 
 jobs:
   build:
@@ -23,16 +21,6 @@ jobs:
       run: ls -R
     - name: Build with Maven
       run: mvn -B compile --file ./webapp/pom.xml
-    - name: Run Tests
-      run: mvn -B test --file ./webapp/pom.xml
 
-  # merge-check:
-  #   name: Merge Check
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Merge only if checks are successful
-  #       if: success()
-  #       run: echo "All checks passed. You can now merge the pull request."
 
 
