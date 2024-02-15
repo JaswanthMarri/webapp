@@ -1,6 +1,7 @@
 package com.example.webapp.config;
 
-//import com.example.webapp.filter.TokenAuthenticationFilter;
+// import com.example.webapp.filter.TokenAuthenticationFilter;
+import com.example.webapp.filter.TokenAuthenticationFilter;
 import com.example.webapp.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -11,8 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -22,17 +22,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private final UserService userService;
   private final BCryptPasswordEncoder passwordEncoder;
 
+
   @Bean
   public CustomAuthenticationProvider authenticationProvider() {
     return new CustomAuthenticationProvider();
   }
 
-//  @Bean
-//  public TokenAuthenticationFilter tokenAuthenticationFilter() throws Exception {
-//    TokenAuthenticationFilter filter = new TokenAuthenticationFilter(authenticationManagerBean());
-//    filter.setFilterProcessesUrl("/v1/user/self"); // Set login URL
-//    return filter;
-//  }
   @Bean
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -43,6 +38,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.authenticationProvider(authenticationProvider());
   }
+
+
+//  @Bean
+//  public AuthenticationFailureHandler customAuthenticationFailureHandler() {
+//    return new AuthFailureHandler();
+//  }
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf()
@@ -53,8 +55,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // .anyRequest()
         // .permitAll() // Allow all other requests without authentication
         .and()
+        //.formLogin()
+        //.failureHandler(customAuthenticationFailureHandler())
+        //.and()
         //.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
         .httpBasic(); // Enable basic authentication
   }
-
 }

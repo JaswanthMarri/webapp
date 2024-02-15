@@ -94,10 +94,10 @@ public class WebAppControllerIntegrationTest {
         .contentType(ContentType.JSON)
         .body(requestBody)
         .when()
-        .post("/v1/user");
-//        .then()
-//        .statusCode(201);
-
+        .post("/v1/user")
+        .then()
+        .statusCode(201);
+    
     String updatedBody =
         "{\r\n  \"first_name\": \"Jaswanth\",\r\n  \"last_name\": \"Doe\",\r\n  \"password\": \"testing1\",\r\n  \"username\": \"jasw2@doeexample.com\"\r\n}";
 

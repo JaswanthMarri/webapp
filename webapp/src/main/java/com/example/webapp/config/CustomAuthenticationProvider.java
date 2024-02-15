@@ -9,23 +9,14 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Slf4j
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-  @Autowired private UserAccountRepo userRepo;
   @Autowired
   PasswordEncoder passwordEncoder;
+  @Autowired private UserAccountRepo userRepo;
   //@Autowired SecurityBeansConfig sc;
   //  public CustomAuthenticationProvider(UserAccountRepo userRepo) {
   //    this.userRepo = userRepo;
@@ -42,9 +33,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     log.info(passwordEncoder.encode(password));
     UserAccount ua = userRepo.findByUsername(username);
     //log.info(ua.getPassword());
-    if (ua.equals(null) || !passwordEncoder.matches( password, ua.getPassword())){ //ua.getPassword() != password) {
+    if ((ua == null) || !passwordEncoder.matches(password, ua.getPassword())){ //ua.getPassword() != password) {
       //log.info(ua.getPassword());
       throw new AuthenticationServiceException(username);
+      //return new UsernamePasswordAuthenticationToken(username,null); //
     }
     return new UsernamePasswordAuthenticationToken(username, password, null);
   }

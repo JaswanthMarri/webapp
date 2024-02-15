@@ -37,6 +37,13 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
     this.ds = ds;
   }
 
+  public static HttpHeaders noCacheHeaders() {
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+    headers.add("Pragma", "no-cache");
+    return headers;
+  }
+
   public ResponseEntity<Void> HealthCheckService() {
     try (Connection conn = ds.getConnection()) {
       Statement stmt = conn.createStatement();
@@ -84,13 +91,6 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     UserAccount userAccount = userRepo.findByUsername(username);
     return userAccount;
-  }
-
-  public static HttpHeaders noCacheHeaders() {
-    HttpHeaders headers = new HttpHeaders();
-    headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.add("Pragma", "no-cache");
-    return headers;
   }
 
   @Override

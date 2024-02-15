@@ -59,6 +59,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     } catch (Exception e) {
       log.error("Error occurred while processing Basic token", e);
       response.setStatus(HttpStatus.UNAUTHORIZED.value());
+      response.setContentType("application/json");
+      response.setCharacterEncoding("UTF-8");
+      response.getWriter().write("");
       return;
     }
 

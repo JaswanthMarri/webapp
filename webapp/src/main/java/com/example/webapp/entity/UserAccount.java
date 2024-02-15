@@ -1,16 +1,14 @@
 package com.example.webapp.entity;
 
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.UUID;
+import javax.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.UUID;
-
 
 @Data
 @Entity
