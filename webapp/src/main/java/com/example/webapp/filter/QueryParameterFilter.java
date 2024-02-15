@@ -17,27 +17,16 @@ public class QueryParameterFilter implements Filter {
     HttpServletRequest httpRequest = (HttpServletRequest) request;
     HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-    //
-    //    // Check if there are any query parameters present in the request
-    //    if (httpRequest.getQueryString() != null) {
-    //      // Reject the request with an appropriate error response
-    //      HttpServletResponse httpResponse = (HttpServletResponse) response;
-    //      httpResponse.sendError(
-    //          HttpServletResponse.SC_BAD_REQUEST);
-    //      return;
-    //    }
     if (httpRequest.getQueryString() != null) {
       // Reject the request with a custom error response
       ResponseEntity<String> errorResponse =
           ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
       httpResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-      //httpResponse.getWriter().write(errorResponse));
+      // httpResponse.getWriter().write(errorResponse));
       return;
     }
 
     // If no query parameters are present, proceed with the request
     chain.doFilter(request, response);
   }
-
-  // Other methods of the Filter interface
 }

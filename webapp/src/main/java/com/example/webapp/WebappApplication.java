@@ -14,8 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EntityScan("com.example.webapp.entity")
 public class WebappApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(WebappApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(WebappApplication.class, args);
+  }
 }
