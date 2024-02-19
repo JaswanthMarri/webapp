@@ -56,7 +56,10 @@ jobs:
       - name: Install Packer
         run: |
           sudo apt-get update && sudo apt-get install -y packer
-
+      
+      - name: List directory contents
+        run: ls -R
+        
       - name: Format Packer template
         run: packer fmt ./packer/pck-img.json
 
