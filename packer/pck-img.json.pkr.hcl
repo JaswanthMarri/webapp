@@ -50,11 +50,11 @@ build {
     ]
   }
   provisioner "shell" {
-    script = "./group.sh"
+    script = "./packer/group.sh"
   }
 
   provisioner "shell" {
-    script = "./install_db.sh"
+    script = "./packer/install_db.sh"
   }
 
   provisioner "file" {
