@@ -1,0 +1,39 @@
+{ 
+
+  "builders": [{
+    "type": "googlecompute",
+    "project_id": "cloud-nw-dev",
+    "source_image_family": "centos-stream-8",
+    "ssh_username": "root",
+    "image_name": "custom-image-with-db",
+    "image_family": "custom-images",
+    "zone": "us-east1-c",
+	"use_os_login": true,
+	"network": "projects/cloud-nw-dev/global/networks/default",
+	"subnetwork": "default"
+  }],
+
+  "provisioners": [{
+    "type": "shell",
+    "script": "group.sh"
+  },
+  {
+    "type": "shell",
+    "script": "install_db.sh"
+  },
+  {
+    "type": "file",
+    "source": "csye6225.service",
+    "destination": "/tmp/csye6225.service"
+  },
+  {
+    "type": "shell",
+    "script": "server.sh"
+  }
+  ],
+
+  "post-processors": [{
+    "type": "manifest",
+    "output": "image-manifest.json"
+  }]
+}
