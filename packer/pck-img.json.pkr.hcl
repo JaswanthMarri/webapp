@@ -59,14 +59,14 @@ build {
 
   provisioner "file" {
     destination = "/tmp/csye6225.service"
-    source      = "./csye6225.service"
+    source      = "./packer/csye6225.service"
   }
 
   provisioner "shell" {
-    script = "./server.sh"
+    script = "./packer/server.sh"
   }
 
   post-processor "manifest" {
-    output = "image-manifest.json"
+    output = "./packer/image-manifest.json"
   }
 }
