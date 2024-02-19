@@ -45,3 +45,22 @@ jobs:
         cache: maven
     - name: Run Tests
       run: mvn -B test --file ./webapp/pom.xml
+
+  packer:
+    name: packer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Packer
+        run: |
+          sudo apt-get update && sudo apt-get install -y packer
+
+      - name: Format Packer template
+        run: packer fmt ./packer/pck-img.json
+
+      - name: Validate Packer template
+        run: packer validate ./packer/pck-img.json
+    
+
