@@ -59,6 +59,9 @@ jobs:
       
       - name: List directory contents
         run: ls -R
+
+      - name:  Packer INIT
+        run: packer init
         
       - name: Format Packer template
         run: packer fmt ./packer/pck-img.json.pkr.hcl
