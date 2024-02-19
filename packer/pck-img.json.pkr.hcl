@@ -46,7 +46,7 @@ build {
   provisioner "shell" {
     inline = [
       "echo Adding file to Docker Container",
-      ls -l
+      "ls -l"
     ]
   }
   provisioner "shell" {
