@@ -61,8 +61,8 @@ jobs:
         run: ls -R
         
       - name: Format Packer template
-        run: packer fmt ./packer/pck-img.json
+        run: packer fmt ./packer/pck-img.json.pkr.hcl
 
       - name: Validate Packer template
-        run: packer validate ./packer/pck-img.json
+        run: packer validate ./packer/pck-img.json.pkr.hcl
     
