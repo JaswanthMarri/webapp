@@ -58,8 +58,8 @@ jobs:
           sudo apt-get update && sudo apt-get install -y packer
 
       - name: Format Packer template
-        run: packer fmt path/to/your/template.json
+        run: packer fmt ./packer/pck-img.json
 
       - name: Validate Packer template
-        run: packer validate path/to/your/template.json
+        run: packer validate ./packer/pck-img.json
     
