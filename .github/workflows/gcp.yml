@@ -6,14 +6,15 @@ on:
 
 jobs:
   gcloud-cli:
-    name: gcloud-cli
     runs-on: ubuntu-latest
-    env:
-      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
     steps:
-      - name: 'auth'
+      - id: 'auth'
         uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
+
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
