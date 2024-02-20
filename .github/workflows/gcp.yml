@@ -9,7 +9,7 @@ jobs:
     name: gcloud-cli
     runs-on: ubuntu-latest
     env:
-      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
     steps:
       - name: 'auth'
         uses: 'google-github-actions/auth@v2'
