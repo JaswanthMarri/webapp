@@ -8,7 +8,6 @@ jobs:
   gcloud-cli:
     permissions:
         contents: 'read'
-        id-token: 'write'
     runs-on: ubuntu-latest
     steps:
       - id: 'auth'
