@@ -15,7 +15,7 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Read variables from file
+      - name: 'Read'
         run: |
             echo "Reading variables from file"
             echo "$env_var"
