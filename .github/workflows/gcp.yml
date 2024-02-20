@@ -13,9 +13,10 @@ jobs:
     steps:
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
+        env:
+          KEY: ${{ secrets.GCP_DEV }}
         with:
-          credentials_json: '${{ secrets.GCP_DEV }}'
-
+          credentials_json: KEY
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
 
