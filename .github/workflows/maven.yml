@@ -56,11 +56,16 @@ jobs:
       - name: Install Packer
         run: |
           sudo apt-get update && sudo apt-get install -y packer
+      
+      - name: List directory contents
+        run: ls -R
 
+      - name:  Packer INIT
+        run: packer init ./packer/pck-img.json.pkr.hcl
+        
       - name: Format Packer template
-        run: packer fmt ./packer/pck-img.json
+        run: packer fmt ./packer/pck-img.json.pkr.hcl
 
       - name: Validate Packer template
-        run: packer validate ./packer/pck-img.json
+        run: packer validate ./packer/pck-img.json.pkr.hcl
     
-
