@@ -1,7 +1,7 @@
 name: GCP CLI
 
 on:
-  pull_request:
+  pull_request_target:
     types:  ["opened", "reopened", "synchronize"]
 env:
   # Setting an environment variable with the value of a configuration variable
