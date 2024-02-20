@@ -16,9 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Read'
-        run: |
-            echo "Reading variables from file"
-            echo "$env_var"
+        run: echo "Reading variables from file"
+      - name: 'ok'
+        run: echo "$cred"
+        env:
+          cred: ${{ secrets.GCP_SA_KEY }}
       - name: 'auth'
         uses: 'google-github-actions/auth@v2'
         env: # Or as an environment variable
