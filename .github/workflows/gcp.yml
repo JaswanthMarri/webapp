@@ -3,7 +3,9 @@ name: GCP CLI
 on:
   pull_request_target:
     types:  ["opened", "reopened", "synchronize"]
-
+env:
+  # Setting an environment variable with the value of a configuration variable
+  env_var: ${{ vars.REPO_VAR }}
 jobs:
   deploy:
     # Add 'id-token' with the intended permissions for workload identity federation
@@ -13,6 +15,10 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
+      - name: Read variables from file
+        run: |
+            echo "Reading variables from file"
+            echo "$env_var"
       - name: 'auth'
         uses: 'google-github-actions/auth@v2'
         env: # Or as an environment variable
