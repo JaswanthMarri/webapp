@@ -69,15 +69,3 @@ jobs:
       - name: Validate Packer template
         run: packer validate ./packer/pck-img.json.pkr.hcl
     
-  gcloud-cli:
-    name: gcloud-cli
-    runs-on: ubuntu-latest
-    env:
-      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
-    steps:
-      - name: 'auth'
-        uses: 'google-github-actions/auth@v2'
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v2'
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
