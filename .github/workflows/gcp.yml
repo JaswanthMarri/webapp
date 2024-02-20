@@ -3,17 +3,26 @@ name: GCP CLI
 on:
   pull_request_target:
     types:  ["opened", "reopened", "synchronize"]
-
+env:
+  # Setting an environment variable with the value of a configuration variable
+  env_var: ${{ vars.REPO_VAR }}
 jobs:
-  gcloud-cli:
-    name: gcloud-cli
+  deploy:
+    # Add 'id-token' with the intended permissions for workload identity federation
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     runs-on: ubuntu-latest
-    env:
-      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
     steps:
-      - name: 'auth'
-        uses: 'google-github-actions/auth@v2'
+      - name: 'Read'
+        run: echo "Reading variables from file"
+      - name: 'ok'
+        run: echo "$cred"
+        env:
+          cred: ${{ secrets.GCP_SA_KEY }}
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
+    
