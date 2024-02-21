@@ -37,4 +37,5 @@ jobs:
         
       - name: Build Packer template
         run: packer build -force ./packer/pck-img.json.pkr.hcl
+
         
