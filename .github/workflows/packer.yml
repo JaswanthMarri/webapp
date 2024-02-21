@@ -35,7 +35,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
+      
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: webapp-artifact
+          path: ./webapp-artifact
+          
       - name: Install Packer
         run: |
           sudo apt-get update && sudo apt-get install -y packer
@@ -61,7 +67,7 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ./gcp-sa-key.json
         run: |
-          packer build -force ./packer/pck-img.json.pkr.hcl
+          packer build -force -var 'source_path=./webapp-artifact' ./packer/pck-img.json.pkr.hcl
 
   gcp_cli:
     runs-on: ubuntu-latest
