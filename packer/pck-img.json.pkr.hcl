@@ -58,6 +58,7 @@ build {
     provisioner "file" {
     destination = "/usr/app/webapp-0.0.1-SNAPSHOT.jar"
     source      = var.source_path
+
   }
 
   provisioner "shell" {
