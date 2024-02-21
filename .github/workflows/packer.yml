@@ -4,7 +4,10 @@ on:
   pull_request:
     types:
       - closed
-      
+
+env:
+    GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+
 jobs:
   call-workflow:
     uses: JaswanthMarri/webapp/.github/workflows/test.yml@main
@@ -31,4 +34,7 @@ jobs:
 
       - name: Validate Packer template
         run: packer validate ./packer/pck-img.json.pkr.hcl
-    
+        
+      - name: Build Packer template
+        run: packer build -force pck-img.json.pkr.hcl
+        
