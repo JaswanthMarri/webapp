@@ -15,6 +15,7 @@ sudo systemctl start postgresql || exit 1
 sudo firewall-cmd --add-port=5432/tcp --permanent || exit 1
 sudo firewall-cmd --reload || exit 1
 
+
 sudo useradd -m postgres
 
 # Change the ownership of the PostgreSQL data directory to the postgres user
