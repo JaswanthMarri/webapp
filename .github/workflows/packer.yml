@@ -24,14 +24,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: List directory contents
-        run: ls -Rbuild and call-workflow
       - name: Build with Maven
         run: mvn package --file ./webapp/pom.xml
   packer:
     name: packer
     if: >
-      github.event_name == 'workflow_run' &&
       github.event.workflow_run.conclusion == 'success' &&
       github.event.pull_request.merged == true
     runs-on: ubuntu-latest
