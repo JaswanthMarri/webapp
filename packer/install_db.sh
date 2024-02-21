@@ -12,6 +12,9 @@ sudo postgresql-setup initdb || exit 1
 sudo systemctl enable postgresql || exit 1
 sudo systemctl start postgresql || exit 1
 
+sudo firewall-cmd --add-port=5432/tcp --permanent || exit 1
+sudo firewall-cmd --reload || exit 1
+
 sudo useradd -m postgres
 
 # Change the ownership of the PostgreSQL data directory to the postgres user
@@ -22,8 +25,7 @@ sudo passwd postgres
 echo 'postgres' | sudo passwd --stdin postgres
 
 # Open firewall port (prompt for password or use another method)
-sudo firewall-cmd --add-port=5432/tcp --permanent || exit 1
-sudo firewall-cmd --reload || exit 1
+
 
 # Check if the role exists before creating it
 if sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='postgres'" | grep -q 1; then
@@ -38,7 +40,7 @@ fi
 sudo -u postgres createdb test_db
 
 # Create database (if it doesn't already exist)
-if sudo psql -lqt | cut -d \| -f 1 | grep -qw test_db; then
+if sudo -u postgres psql -lqt | cut -d \| -f 1 | grep -qw test_db; then
     echo "Database 'test_db' already exists."
 else
     sudo -u postgres psql -c "CREATE DATABASE test_db;" || exit 1
