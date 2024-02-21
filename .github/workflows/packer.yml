@@ -51,7 +51,9 @@ jobs:
         run: echo "here it is ${{ secrets.GCP_KEY_ORG }}"
         
       - name: Set up service account key
-        run: echo "${{ secrets.GCP_KEY_ORG }}" > gcp-sa-key.json
+        run: echo "$CREDS" > gcp-sa-key.json
+        env:
+          CREDS: ${{ secrets.GCP_KEY_ORG }}
 
       - name: Run Packer build
         env:
