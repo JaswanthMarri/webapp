@@ -7,7 +7,7 @@ on:
 
 env:
     GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
-    
+
 jobs:
   call-workflow:
     uses: JaswanthMarri/webapp/.github/workflows/test.yml@main
