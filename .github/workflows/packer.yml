@@ -36,5 +36,5 @@ jobs:
         run: packer validate ./packer/pck-img.json.pkr.hcl
         
       - name: Build Packer template
-        run: packer build -force pck-img.json.pkr.hcl
+        run: packer build -force ./packer/pck-img.json.pkr.hcl
         
