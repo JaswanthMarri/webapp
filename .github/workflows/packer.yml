@@ -26,6 +26,7 @@ jobs:
         with:
           name: webapp-artifact
           path: ./webapp/target/*.jar
+
   packer:
     name: packer
     needs: [call-workflow, build]
