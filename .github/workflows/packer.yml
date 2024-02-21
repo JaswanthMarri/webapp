@@ -25,7 +25,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: webapp-artifact
-          path: ./webapp-art.jar
+          path: ./webapp/target/*.jar
+
   packer:
     name: packer
     needs: [call-workflow, build]
