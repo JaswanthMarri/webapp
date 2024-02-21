@@ -43,3 +43,4 @@ sudo echo "PostgreSQL installation and configuration complete." >> /var/log/post
 sudo systemctl restart postgresql
 
 exit 0
+
