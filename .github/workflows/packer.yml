@@ -52,6 +52,7 @@ jobs:
         
       - name: Set up service account key
         run: printf "$CREDS" > gcp-sa-key.json
+
         env:
           CREDS: ${{ secrets.GCP_KEY_ORG }}
 
