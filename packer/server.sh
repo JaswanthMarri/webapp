@@ -2,10 +2,12 @@
 
 ls -l
 sudo cp /tmp/csye6225.service /etc/systemd/system/csye6225.service
+sudo cp /tmp/webapp-0.0.1-SNAPSHOT.jar /opt/app/webapp-0.0.1-SNAPSHOT.jar
+sudo cp /tmp/application.properties /opt/application.properties
 cd /tmp
 curl -O https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz
 sudo mkdir /opt/tomcat
-sudo chown -R csye6225:csye6225 /opt/tomcat
+sudo chown -R csye6225:csye6225 /opt/
 sudo -u csye6225 tar xzvf apache-tomcat-9*tar.gz -C /opt/tomcat --strip-components=1
 sudo chmod +x /opt/tomcat/bin/*.sh
 sudo sh -c 'chmod +x /opt/tomcat/bin/*.sh'
