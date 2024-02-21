@@ -54,6 +54,11 @@ build {
     destination = "/tmp/webapp-0.0.1-SNAPSHOT.jar"
     source      = "./webapp-artifact/webapp-0.0.1-SNAPSHOT.jar"
   }
+  
+  provisioner "file" {
+    destination = "/tmp/application.properties"
+    source      = "./packer/application.properties"
+  }
 
   provisioner "shell" {
     script = "./packer/server.sh"
