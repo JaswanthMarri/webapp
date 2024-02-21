@@ -34,6 +34,8 @@ else
     sudo -u csye6225 psql -c "CREATE DATABASE test_db;" || exit 1
 fi
 
+sudo systemctl restart postgresql
+
 
 # Grant privileges
 sudo -u csye6225 psql -c "GRANT ALL PRIVILEGES ON DATABASE test_db TO postgres;" || exit 1
