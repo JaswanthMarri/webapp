@@ -46,7 +46,7 @@ jobs:
 
       - name: Validate Packer template
         run: packer validate ./packer/pck-img.json.pkr.hcl
-        
+
       - name: account key
         run: echo "here it is ${{ secrets.GCP_SA_KEY }}"
         
