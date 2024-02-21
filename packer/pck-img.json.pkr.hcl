@@ -50,8 +50,8 @@ build {
   }
   
     provisioner "file" {
-    destination = "/usr/app/webapp-0.0.1-SNAPSHOT.jar"
-    source      = "./webapp/target/webapp-0.0.1-SNAPSHOT.jar"
+    destination = "/usr/app/webapp-art.jar"
+    source      = "./webapp-art.jar"
   }
 
   provisioner "shell" {
