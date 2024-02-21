@@ -24,7 +24,7 @@ jobs:
 
   packer:
     name: packer
-    needs: call-workflow
+    needs: [call-workflow, build]
     if: github.event.pull_request.merged == true && success()
     runs-on: ubuntu-latest
     steps:
