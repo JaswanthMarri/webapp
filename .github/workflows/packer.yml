@@ -1,4 +1,4 @@
-name: Packer
+name: Packer CI
 
 on:
   pull_request:
@@ -8,6 +8,21 @@ on:
 jobs:
   call-workflow:
     uses: JaswanthMarri/webapp/.github/workflows/test.yml@main
+    
+  gcp_cli:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        env: # 
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+  
   packer:
     name: packer
     if: github.event.pull_request.merged == true
@@ -32,6 +47,9 @@ jobs:
       - name: Validate Packer template
         run: packer validate ./packer/pck-img.json.pkr.hcl
 
+      - name: account key
+        run: echo "here it is ${{ secrets.GCP_SA_KEY }}"
+        
       - name: Set up service account key
         run: echo "${{ secrets.GCP_SA_KEY }}" > gcp-sa-key.json
 
