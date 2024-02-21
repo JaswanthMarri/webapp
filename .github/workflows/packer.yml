@@ -51,7 +51,8 @@ jobs:
         run: printf "here it is ${{ secrets.GCP_KEY_ORG }}"
         
       - name: Set up service account key
-        run: printf "$CREDS" > gcp-sa-key.json
+        run: cat <<< "$CREDS" > gcp-sa-key.json
+
 
         env:
           CREDS: ${{ secrets.GCP_KEY_ORG }}
