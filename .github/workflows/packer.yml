@@ -23,9 +23,8 @@ jobs:
         run: mvn package --file ./webapp/pom.xml
   packer:
     name: packer
-    if: >
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.pull_request.merged == true
+    needs: call-workflow
+    if: github.event.pull_request.merged == true && success()
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
