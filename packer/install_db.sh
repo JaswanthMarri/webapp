@@ -5,7 +5,7 @@
 sudo yum install -y postgresql-server postgresql-contrib || exit 1
 
 # Initialize database (consider adding a password prompt)
-sudo postgresql-setup initdb || exit 1
+sudo -u csye6225 postgresql-setup initdb || exit 1
 
 # Enable and start PostgreSQL service
 sudo systemctl enable postgresql || exit 1
