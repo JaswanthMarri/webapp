@@ -5,9 +5,6 @@ on:
     types:
       - closed
 
-env:
-    GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
-
 jobs:
   call-workflow:
     uses: JaswanthMarri/webapp/.github/workflows/test.yml@main
@@ -37,7 +34,12 @@ jobs:
         
       - name: output Packer template
         run: echo " here is $GOOGLE_APPLICATION_CREDENTIALS"
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+
       - name: Build Packer template
         run: packer build -force ./packer/pck-img.json.pkr.hcl
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
         
