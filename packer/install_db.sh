@@ -12,8 +12,8 @@ sudo postgresql-setup initdb || exit 1
 sudo systemctl enable postgresql || exit 1
 sudo systemctl start postgresql || exit 1
 
-sudo chown -R csye6225:csye6225 /var/lib/pgsql
-sudo -u csye6225 chmod 777 /var/lib/pgsql
+#sudo chown -R csye6225:csye6225 /var/lib/pgsql
+#sudo -u csye6225 chmod 777 /var/lib/pgsql
 
 #sudo chmod 707 /var/lib/
 #sudo chown -R csye6225:csye6225 /var/lib/
