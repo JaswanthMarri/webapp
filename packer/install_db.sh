@@ -13,6 +13,7 @@ sudo systemctl start postgresql || exit 1
 
 sudo chown -R csye6225:csye6225 /var/lib/pgsql/
 chmod 770 /var/lib/pgsql
+
 # Open firewall port (prompt for password or use another method)
 sudo firewall-cmd --add-port=5432/tcp --permanent || exit 1
 sudo firewall-cmd --reload || exit 1
