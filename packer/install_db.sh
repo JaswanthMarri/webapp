@@ -4,16 +4,19 @@
 # Install PostgreSQL
 sudo yum install -y postgresql-server postgresql-contrib || exit 1
 
+
 # Initialize database (consider adding a password prompt)
-sudo -u csye6225 postgresql-setup initdb || exit 1
+sudo postgresql-setup initdb || exit 1
 
 # Enable and start PostgreSQL service
 sudo systemctl enable postgresql || exit 1
 sudo systemctl start postgresql || exit 1
 
-sudo chmod 707 /var/lib/
-sudo chown -R csye6225:csye6225 /var/lib/
-#sudo -u csye6225 chmod 707 /var/lib/
+sudo chown -R csye6225:csye6225 /var/lib/pgsql
+sudo -u csye6225 chmod 777 /var/lib/pgsql
+
+#sudo chmod 707 /var/lib/
+#sudo chown -R csye6225:csye6225 /var/lib/
 
 
 # Open firewall port (prompt for password or use another method)
@@ -40,7 +43,7 @@ else
     sudo -u csye6225 psql -c "CREATE DATABASE test_db;" || exit 1
 fi
 
-sudo chown -R csye6225:csye6225 /var/
+#sudo chown -R csye6225:csye6225 /var/
 
 # Grant privileges
 sudo -u csye6225 psql -c "GRANT ALL PRIVILEGES ON DATABASE test_db TO postgres;" || exit 1
