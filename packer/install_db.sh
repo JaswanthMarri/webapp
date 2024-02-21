@@ -4,15 +4,16 @@
 # Install PostgreSQL
 sudo yum install -y postgresql-server postgresql-contrib || exit 1
 
-sudo chown -R csye6225:csye6225 /var/lib/
-sudo -u csye6225 chmod 777 /var/lib/
 
 # Initialize database (consider adding a password prompt)
-sudo -u csye6225 postgresql-setup initdb || exit 1
+sudo postgresql-setup initdb || exit 1
 
 # Enable and start PostgreSQL service
 sudo systemctl enable postgresql || exit 1
 sudo systemctl start postgresql || exit 1
+
+sudo chown -R csye6225:csye6225 /var/lib/pgsql
+sudo -u csye6225 chmod 777 /var/lib/pgsql
 
 #sudo chmod 707 /var/lib/
 #sudo chown -R csye6225:csye6225 /var/lib/
