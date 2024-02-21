@@ -4,25 +4,29 @@ on:
   pull_request_target:
     types:
       - closed
+  workflow_run:
+    workflows: [Integration Tests]
+    types:
+      - completed
 
 jobs:
-  call-workflow:
-    uses: JaswanthMarri/webapp/.github/workflows/test.yml@main
-    
-  gcp_cli:
+#   call-workflow:
+#     uses: JaswanthMarri/webapp/.github/workflows/test.yml@main
+  build:
+    name: build
     runs-on: ubuntu-latest
     steps:
-      - name: 'auth'
-        uses: 'google-github-actions/auth@v2'
-        env: # 
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v2'
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
-  
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: List directory contents
+        run: ls -Rbuild and call-workflow
+      - name: Build with Maven
+        run: mvn package --file ./webapp/pom.xml
   packer:
     name: packer
     if: github.event.pull_request.merged == true
@@ -47,13 +51,8 @@ jobs:
       - name: Validate Packer template
         run: packer validate ./packer/pck-img.json.pkr.hcl
 
-      - name: account key
-        run: printf "here it is ${{ secrets.GCP_KEY_ORG }}"
-        
       - name: Set up service account key
         run: cat <<< "$CREDS" > gcp-sa-key.json
-
-
         env:
           CREDS: ${{ secrets.GCP_KEY_ORG }}
 
@@ -62,3 +61,17 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: ./gcp-sa-key.json
         run: |
           packer build -force ./packer/pck-img.json.pkr.hcl
+
+  gcp_cli:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        env: # 
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
