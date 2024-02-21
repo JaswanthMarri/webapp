@@ -4,15 +4,10 @@ on:
   pull_request_target:
     types:
       - closed
-  workflow_run:
-    workflows: [Integration Tests]
-    types:
-      - completed
 
 jobs:
-#   call-workflow:
-#     uses: JaswanthMarri/webapp/.github/workflows/test.yml@main
-
+  call-workflow:
+    uses: JaswanthMarri/webapp/.github/workflows/test.yml@main
   build:
     name: build
     runs-on: ubuntu-latest
