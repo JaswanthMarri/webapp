@@ -20,6 +20,7 @@ sudo firewall-cmd --reload || exit 1
 # Check if the role exists before creating it
 if sudo -u csye6225 psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='postgres'" | grep -q 1; then
 	sudo -u csye6225 psql -c "ALTER USER postgres WITH PASSWORD 'postgres';" || exit 1
+
     echo "Role 'postgres' already exists."
 else
     # Create database and user (use stronger password)
