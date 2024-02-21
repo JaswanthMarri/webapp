@@ -15,6 +15,7 @@ sudo chmod 707 /var/lib/
 sudo chown -R csye6225:csye6225 /var/lib/
 #sudo -u csye6225 chmod 707 /var/lib/
 
+
 # Open firewall port (prompt for password or use another method)
 sudo firewall-cmd --add-port=5432/tcp --permanent || exit 1
 sudo firewall-cmd --reload || exit 1
