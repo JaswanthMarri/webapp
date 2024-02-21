@@ -35,6 +35,8 @@ jobs:
       - name: Validate Packer template
         run: packer validate ./packer/pck-img.json.pkr.hcl
         
+      - name: output Packer template
+        run: echo " here is $GOOGLE_APPLICATION_CREDENTIALS"
       - name: Build Packer template
         run: packer build -force ./packer/pck-img.json.pkr.hcl
 
