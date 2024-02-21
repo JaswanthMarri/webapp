@@ -67,7 +67,7 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ./gcp-sa-key.json
         run: |
-          packer build -force -var 'source_path=./webapp-artifact' ./packer/pck-img.json.pkr.hcl
+          packer build -force ./packer/pck-img.json.pkr.hcl
 
   gcp_cli:
     runs-on: ubuntu-latest
