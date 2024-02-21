@@ -12,7 +12,7 @@ sudo systemctl enable postgresql || exit 1
 sudo systemctl start postgresql || exit 1
 sudo -u csye6225 chmod 770 /var/lib/pgsql
 
-chmod 770 /var/lib/pgsql
+sudo -u csye6225 chmod 770 /var/lib/pgsql
 
 #sudo chown -R csye6225:csye6225 /var/lib/pgsql
 
