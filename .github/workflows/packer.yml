@@ -58,6 +58,6 @@ jobs:
 
       - name: Run Packer build
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: ./gcp-sa-key.json
         run: |
           packer build -force ./packer/pck-img.json.pkr.hcl
