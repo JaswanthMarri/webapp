@@ -48,10 +48,10 @@ jobs:
         run: packer validate ./packer/pck-img.json.pkr.hcl
 
       - name: account key
-        run: echo "here it is ${{ secrets.GCP_KEY_ORG }}"
+        run: printf "here it is ${{ secrets.GCP_KEY_ORG }}"
         
       - name: Set up service account key
-        run: echo "$CREDS" > gcp-sa-key.json
+        run: printf "$CREDS" > gcp-sa-key.json
         env:
           CREDS: ${{ secrets.GCP_KEY_ORG }}
 
