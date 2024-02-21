@@ -40,7 +40,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: webapp-artifact
-          path: ./webapp-artifact.jar
+          path: ./webapp-artifact
           
       - name: Install Packer
         run: |
