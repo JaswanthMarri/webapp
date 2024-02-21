@@ -11,7 +11,7 @@ sudo -u csye6225 postgresql-setup initdb || exit 1
 sudo systemctl enable postgresql || exit 1
 sudo systemctl start postgresql || exit 1
 
-sudo chown -R csye6225:csye6225 /var/lib/pgsql/data
+sudo chown -R csye6225:csye6225 /var/lib/pgsql/
 
 # Open firewall port (prompt for password or use another method)
 sudo firewall-cmd --add-port=5432/tcp --permanent || exit 1
