@@ -38,7 +38,9 @@ fi
 sudo -u csye6225 psql -c "GRANT ALL PRIVILEGES ON DATABASE test_db TO postgres;" || exit 1
 
 # Log execution details
-sudo echo "PostgreSQL installation and configuration complete." >> /var/log/postgresql_setup.log
+echo "PostgreSQL installation and configuration complete." >> sudo -u postgres tee -a /var/log/postgresql_setup.log
+
+sudo sed -i 's%host\s\+replication\s\+all\s\+127\.0\.0\.1\/32\s\+ident%host    replication          all          127.0.0.1/32            md5%g' /var/lib/pgsql/data/pg_hba.conf
 
 #sudo systemctl restart postgresql
 
