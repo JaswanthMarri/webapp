@@ -13,29 +13,29 @@ sudo systemctl start postgresql || exit 1
 sudo firewall-cmd --add-port=5432/tcp --permanent || exit 1
 sudo firewall-cmd --reload || exit 1
 
-sudo useradd -m postgres
-echo 'postgres' | sudo passwd --stdin postgres
+sudo useradd -m csye6225
+#echo 'postgres' | sudo passwd --stdin postgres
 
 
 # Check if the role exists before creating it
-if sudo -u postgres psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='postgres'" | grep -q 1; then
-	sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'postgres';" || exit 1
-    echo "Role 'postgres' already exists."
+if sudo -u csye6225 psql -tAc "SELECT 1 FROM pg_roles WHERE rolname='postgres'" | grep -q 1; then
+	sudo -u csye6225 psql -c "ALTER USER postgres WITH PASSWORD 'postgres';" || exit 1
+    echo "Role 'csye6225' already exists."
 else
     # Create database and user (use stronger password)
-    sudo -u postgres psql -c "CREATE ROLE postgres WITH LOGIN PASSWORD 'postgres';" || exit 1
+    sudo -u csye6225 psql -c "CREATE ROLE postgres WITH LOGIN PASSWORD 'postgres';" || exit 1
     sudo -u postgres psql -c "ALTER ROLE postgres CREATEDB;" || exit 1
 fi
 
 # Create database (if it doesn't already exist)
-if sudo -u postgres psql -lqt | cut -d \| -f 1 | grep -qw test_db; then
+if sudo -u csye6225 psql -lqt | cut -d \| -f 1 | grep -qw test_db; then
     echo "Database 'test_db' already exists."
 else
-    sudo -u postgres psql -c "CREATE DATABASE test_db;" || exit 1
+    sudo -u csye6225 psql -c "CREATE DATABASE test_db;" || exit 1
 fi
 
 # Grant privileges
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE test_db TO postgres;" || exit 1
+sudo -u csye6225 psql -c "GRANT ALL PRIVILEGES ON DATABASE test_db TO postgres;" || exit 1
 
 # Log execution details
 sudo echo "PostgreSQL installation and configuration complete." >> /var/log/postgresql_setup.log

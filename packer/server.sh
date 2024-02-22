@@ -14,6 +14,7 @@ sudo chmod +x /opt/tomcat/bin/*.sh
 sudo sh -c 'chmod +x /opt/tomcat/bin/*.sh'
 sudo cp /opt/tomcat/conf/server.xml /opt/tomcat/conf/server.xml.bak
 sudo sed -i 's/8080/80/g' /opt/tomcat/conf/server.xml
+sudo systemctl daemon-reload
 sudo systemctl enable csye6225
 sudo systemctl start csye6225
 sudo firewall-cmd --add-port=8080/tcp --permanent
