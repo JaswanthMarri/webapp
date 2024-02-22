@@ -1,0 +1,9 @@
+image_family= "custom-images"
+image_name ="custom-image-with-db"
+network = "projects/cloud-nw-dev/global/networks/default"
+project_id = "cloud-nw-dev"
+source_image_family = "centos-stream-8"
+ssh_username = "root
+subnetwork = "default"
+use_os_login = true
+zone = "us-east1-c"
