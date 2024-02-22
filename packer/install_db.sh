@@ -40,7 +40,7 @@ sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE test_db TO postgres;"
 # Log execution details
 sudo echo "PostgreSQL installation and configuration complete." >> /var/log/postgresql_setup.log
 
-sudo systemctl restart postgresql
+#sudo systemctl restart postgresql
 
 exit 0
 
