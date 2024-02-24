@@ -7,7 +7,7 @@ variable "image_name" {
   type    = string
   default = "custom-image-with-db"
 }
-}
+
 variable "network" {
   type    = string
   default = "projects/cloud-nw-dev/global/networks/default"
