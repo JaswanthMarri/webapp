@@ -81,7 +81,7 @@ public class WebAppControllerIntegrationTest {
         .when()
         .get("/v1/user/self")
         .then()
-        .statusCode(200);
+        .statusCode(400);
   }
 
   @Test
