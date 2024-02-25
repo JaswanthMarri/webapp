@@ -76,10 +76,6 @@ build {
     script = "./packer/group.sh"
   }
 
-  provisioner "shell" {
-    script = "./packer/install_db.sh"
-  }
-
   provisioner "file" {
     destination = "/tmp/csye6225.service"
     source      = "./packer/csye6225.service"
@@ -90,11 +86,6 @@ build {
     source      = "./webapp-artifact/webapp-0.0.1-SNAPSHOT.jar"
   }
   
-  provisioner "file" {
-    destination = "/tmp/application.properties"
-    source      = "./packer/application.properties"
-  }
-
   provisioner "shell" {
     script = "./packer/server.sh"
   }
