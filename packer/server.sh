@@ -4,7 +4,7 @@ ls -l
 sudo cp /tmp/csye6225.service /etc/systemd/system/csye6225.service
 sudo mkdir /opt/app
 sudo cp /tmp/webapp-0.0.1-SNAPSHOT.jar /opt/app/webapp-0.0.1-SNAPSHOT.jar
-sudo cp /tmp/application.properties /opt/application.properties
+#sudo cp /tmp/application.properties /opt/application.properties
 cd /tmp
 curl -O https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz
 sudo mkdir /opt/tomcat
