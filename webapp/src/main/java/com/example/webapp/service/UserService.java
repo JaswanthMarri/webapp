@@ -2,6 +2,7 @@ package com.example.webapp.service;
 
 import com.example.webapp.dto.UserDTO;
 import com.example.webapp.dto.UserResponse;
+import com.example.webapp.dto.UserUpdateDTO;
 import com.example.webapp.entity.UserAccount;
 import com.example.webapp.repo.UserAccountRepo;
 import com.example.webapp.util.Utils;
@@ -69,12 +70,14 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
     return resp;
   }
 
-  public boolean updateUser(UserDTO userReq) {
+  public boolean updateUser(UserUpdateDTO userReq) {
     UserAccount user = userRepo.findByUsername(utils.getUserName());
-    if (user != null
-        && userReq.getUsername().toLowerCase().equals(user.getUsername().toLowerCase())) {
+    if (user != null){
+      // && userReq.getUsername().toLowerCase().equals(user.getUsername().toLowerCase())) {
       //      UserAccount updatedUser = utils.convertUserDTOToEntity(userReq);
-      user.setPassword(passwordEncoder.encode(userReq.getPassword()));
+      if (userReq.getPassword() != null && !userReq.getPassword().isBlank()) {
+        user.setPassword(passwordEncoder.encode(userReq.getPassword()));
+      }
       user.setLastName(userReq.getLastName());
       user.setFirstName(userReq.getFirstName());
       userRepo.save(user);
