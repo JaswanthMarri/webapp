@@ -2,6 +2,7 @@ package com.example.webapp.controller;
 
 import com.example.webapp.dto.UserDTO;
 import com.example.webapp.dto.UserResponse;
+import com.example.webapp.dto.UserUpdateDTO;
 import com.example.webapp.service.UserService;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +47,7 @@ public class WebAppController {
     }
 
     @PutMapping("/v1/user/self")
-    public ResponseEntity<String> updateUser(@RequestBody @Valid UserDTO updateUserRequest) {
+    public ResponseEntity<String> updateUser(@RequestBody @Valid UserUpdateDTO updateUserRequest) {
         if(!userService.updateUser(updateUserRequest)){
             return ResponseEntity.badRequest().build();
         }
