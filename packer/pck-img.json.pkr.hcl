@@ -76,6 +76,10 @@ build {
     script = "./packer/group.sh"
   }
 
+  provisioner "shell" {
+    script = "./packer/ops_agent.sh"
+  }
+
   provisioner "file" {
     destination = "/tmp/csye6225.service"
     source      = "./packer/csye6225.service"
