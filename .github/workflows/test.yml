@@ -28,7 +28,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: create directory
-      run: sudo mkdir var/log/myapp/
+      run: sudo mkdir var
+    - name: create directory
+      run: sudo mkdir var/log
+    - name: create directory
+      run: sudo mkdir var/log/myapp
     - name: user directory
       run: stat -c "%U:%G" /var/log/myapp/
     - name: current user directory
