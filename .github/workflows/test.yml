@@ -27,8 +27,14 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: one directory
+      run: ps aux | grep java
+    - name: two directory
+      run: ps -e | grep java
     - name: create directory
       run: sudo mkdir -p /var/log/myapp/
+    - name: list directory
+      run: ls -l
     - name: Run Tests
       run: mvn -B test --file ./webapp/pom.xml
 
