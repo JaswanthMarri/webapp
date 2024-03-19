@@ -39,6 +39,8 @@ jobs:
       run: stat -c "%U:%G" var/log/myapp
     - name: current user directory
       run: stat -c "%U:%G" packer
+    - name: change directory owner
+      run: sudo chown -R runner:docker var/log/myapp
     - name: list directory
       run: ls -l
     - name: Run Tests
