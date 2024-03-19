@@ -98,6 +98,11 @@ build {
   provisioner "shell" {
     script = "./packer/server.sh"
   }
+  
+    provisioner "shell" {
+    script = "./packer/ops_config.sh"
+  }
+
 
   post-processor "manifest" {
     output = "./packer/image-manifest.json"
