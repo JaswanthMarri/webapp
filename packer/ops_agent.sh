@@ -5,3 +5,4 @@ sudo bash add-google-cloud-ops-agent-repo.sh --also-install
 
 sudo cp /tmp/config.yml /etc/google-cloud-ops-agent/config.yaml
 sudo systemctl restart google-cloud-ops-agent
+
