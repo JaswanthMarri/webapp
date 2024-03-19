@@ -1,18 +1,18 @@
 logging:
   receivers:
-    mylogs:
+    file-logs:
       type: files
       include_paths:
       - /var/log/myapp
       record_log_file_path: true
 
     processors:
-        my-app-processor:
+        parser-process:
           type: parse_json
           time_key: time
           time_format: "%Y-%m-%dT%H:%M:%S.%L%Z"
     service:
         pipelines:
           default_pipeline:
-            receivers: [mylogs]
-            processors: [my-app-processor]
+            receivers: [file_logs]
+            processors: [parser-process]
