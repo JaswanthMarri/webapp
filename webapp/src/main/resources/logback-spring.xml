@@ -15,9 +15,20 @@
                  <appendLineSeparator>false</appendLineSeparator>
              </layout>
          </appender>
+        <appender name="jsonFile" class="ch.qos.logback.core.FileAppender">
+            <file>/var/log/myapp/my-app.log</file>
+            <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+                <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+                    <prettyPrint>true</prettyPrint>
+                </jsonFormatter>
+                <timestampFormat>dd.MM.yyyy' 'HH.mm:ss.SSS</timestampFormat>
+                <appendLineSeparator>false</appendLineSeparator>
+            </layout>
+        </appender>
 
          <root level="INFO">
              <appender-ref ref="jsonConsoleAppender" />
+             <appender-ref ref="jsonFile" />
          </root>
      </springProfile>
 
