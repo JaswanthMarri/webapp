@@ -2,9 +2,9 @@ package com.example.webapp.controller;
 
 import com.example.webapp.dto.UserDTO;
 import com.example.webapp.dto.UserResponse;
+import com.example.webapp.dto.UserUpdateDTO;
 import com.example.webapp.service.UserService;
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,8 @@ import org.springframework.web.bind.annotation.*;
 // @Slf4j
 public class WebAppController {
 
-  private static final Logger LOGGER =  LoggerFactory.getLogger(WebAppController.class);
-
   @Autowired private UserService userService;
+  private static final Logger LOGGER = LoggerFactory.getLogger(WebAppController.class);
 
   @GetMapping("/healthz")
   public ResponseEntity<Void> dbHealthCheck() {
@@ -53,7 +52,7 @@ public class WebAppController {
   }
 
   @PutMapping("/v1/user/self")
-  public ResponseEntity<String> updateUser(@RequestBody @Valid UserDTO updateUserRequest) {
+  public ResponseEntity<String> updateUser(@RequestBody @Valid UserUpdateDTO updateUserRequest) {
     if (!userService.updateUser(updateUserRequest)) {
       return ResponseEntity.badRequest().build();
     }
