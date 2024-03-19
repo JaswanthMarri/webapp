@@ -11,7 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Slf4j
+//@Slf4j
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
   @Autowired
@@ -26,11 +26,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     // Implement your token-based authentication logic here
     //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    log.info("Im am here");
+    //log.info("Im am here");
     String username = authentication.getName();
     String password = authentication.getCredentials().toString();
-    log.info(password);
-    log.info(passwordEncoder.encode(password));
+    //log.info(password);
+    //log.info(passwordEncoder.encode(password));
     UserAccount ua = userRepo.findByUsername(username);
     //log.info(ua.getPassword());
     if ((ua == null) || !passwordEncoder.matches(password, ua.getPassword())){ //ua.getPassword() != password) {

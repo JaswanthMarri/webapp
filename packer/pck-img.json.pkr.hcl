@@ -76,6 +76,11 @@ build {
     script = "./packer/group.sh"
   }
 
+  provisioner "file" {
+    destination = "/tmp/config.yml"
+    source      = "./packer/config.yml"
+  }
+  
   provisioner "shell" {
     script = "./packer/ops_agent.sh"
   }
