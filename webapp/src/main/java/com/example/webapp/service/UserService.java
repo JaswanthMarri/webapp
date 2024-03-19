@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Slf4j
+//@Slf4j
 @Service
 public class UserService implements UserDetailsService, UserDetailsPasswordService {
 
@@ -46,10 +48,12 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
   }
 
   public ResponseEntity<Void> HealthCheckService() {
+    Logger logger = LoggerFactory.getLogger("jsonLogger");
+    logger.debug("Debug message");
     try (Connection conn = ds.getConnection()) {
       Statement stmt = conn.createStatement();
     } catch (SQLException ex) {
-      log.info(ex.getMessage());
+      //log.info(ex.getMessage());
       return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
           .headers(noCacheHeaders())
           .build();

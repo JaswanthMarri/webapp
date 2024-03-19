@@ -16,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-@Slf4j
+//@Slf4j
 @Component
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
@@ -57,7 +57,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         }
       }
     } catch (Exception e) {
-      log.error("Error occurred while processing Basic token", e);
+      //log.error("Error occurred while processing Basic token", e);
       response.setStatus(HttpStatus.UNAUTHORIZED.value());
       response.setContentType("application/json");
       response.setCharacterEncoding("UTF-8");
