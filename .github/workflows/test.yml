@@ -33,10 +33,12 @@ jobs:
       run: sudo mkdir var/log
     - name: create directory
       run: sudo mkdir var/log/myapp
+    - name: list directory
+      run: ls -l
     - name: user directory
-      run: stat -c "%U:%G" /var/log/myapp/
+      run: stat -c "%U:%G" var/log/myapp
     - name: current user directory
-      run: stat -c "%U:%G" /packer/
+      run: stat -c "%U:%G" packer
     - name: list directory
       run: ls -l
     - name: Run Tests
