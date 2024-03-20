@@ -4,6 +4,7 @@ ls -l
 sudo cp /tmp/csye6225.service /etc/systemd/system/csye6225.service
 sudo mkdir /opt/app
 sudo mkdir /var/log/myapp
+sudo touch /var/log/myapp/my-app.log
 sudo chown -R csye6225:csye6225 /var/log/myapp
 sudo cp /tmp/webapp-0.0.1-SNAPSHOT.jar /opt/app/webapp-0.0.1-SNAPSHOT.jar
 #sudo cp /tmp/application.properties /opt/application.properties
