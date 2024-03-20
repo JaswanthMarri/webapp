@@ -8,8 +8,15 @@ logging:
     processors:
         json-parse:
             type: parse_json
+            time_key: timestamp
+            time_format: "%Y-%m-%dT%H:%M:%S.%3NZ"
+        move-severity:
+            type: modify_fields
+            fields:
+                severity:
+                    copy_from: jsonPayload.level
     service:
         pipelines:
             default_pipeline:
                 receivers: [my-app-receiver-ko]
-                processors: [json-parse]
+                processors: [json-parse,move-severity]
