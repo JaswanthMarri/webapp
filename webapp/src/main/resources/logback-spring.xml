@@ -16,7 +16,7 @@
             </layout>
         </appender>
         <appender name="jsonFile" class="ch.qos.logback.core.FileAppender">
-            <file>${log.file.path}</file>
+            <file>${log.file}</file>
                 <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
                     <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
                         <prettyPrint>false</prettyPrint>
