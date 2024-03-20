@@ -6,10 +6,9 @@ logging:
       - /var/log/myapp
   processors:
     parse_java_multiline:
-      type: parse_multiline
-      match_any:
-      - type: language_exceptions
-        language: java
+      type: parse_json
+      time_key:    time
+      time_format: "%Y-%m-%dT%H:%M:%S.%L%Z"
     extract_structure:
       type: parse_regex
       field: message
