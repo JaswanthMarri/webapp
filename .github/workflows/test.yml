@@ -40,7 +40,7 @@ jobs:
     - name: current user directory
       run: stat -c "%U:%G" packer
     - name: change directory owner
-      run: sudo chown -R runner:docker var/log/myapp
+      run: sudo chown -R runner:docker var
     - name: list directory
       run: ls -l
     - name: Run Tests
