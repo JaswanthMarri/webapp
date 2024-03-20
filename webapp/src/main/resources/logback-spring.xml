@@ -19,7 +19,7 @@
             <file>./var/log/myapp/my-app.log</file>
             <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
                 <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
-                    <prettyPrint>true</prettyPrint>
+                    <prettyPrint>false</prettyPrint>
                 </jsonFormatter>
                 <timestampFormat>dd.MM.yyyy' 'HH.mm:ss.SSS</timestampFormat>
                 <appendLineSeparator>false</appendLineSeparator>
