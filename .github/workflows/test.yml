@@ -44,5 +44,5 @@ jobs:
     - name: list directory
       run: ls -l
     - name: Run Tests
-      run: sudo -u runner mvn -B test --file ./webapp/pom.xml
+      run: mvn -B test --file ./webapp/pom.xml -Dlog.file=./var/log/myapp/my-app.log
 
