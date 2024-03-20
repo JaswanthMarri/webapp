@@ -4,6 +4,7 @@ logging:
       type: files
       include_paths:
       - /var/log/myapp
+      record_log_file_path: true
   service:
     pipelines:
       pipeline1:
