@@ -10,12 +10,6 @@ logging:
       type: parse_json
       time_key: timestamp
       time_format: "%Y-%m-%dT%H:%M:%S.%L%Z"
-    extract_structure:
-      type: parse_regex
-      field: message
-      regex: "^(?<time>[\d-]*T[\d:.Z]*) (?<severity>[^ ]*) (?<file>[^ :]*):(?<line>[\d]*) - (?<message>(.|\\n)*)$"
-      time_key: time
-      time_format: "%Y-%m-%dT%H:%M:%S.%L"
     move_severity:
       type: modify_fields
       fields:
