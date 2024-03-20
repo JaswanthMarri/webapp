@@ -3,7 +3,8 @@ logging:
     custom_file1:
       type: files
       include_paths:
-      - /var/log/myapp
+      - /var/log/myapp/my-app.log
+      record_log_file_path: true
   processors:
     parse_java_multiline:
       type: parse_json
