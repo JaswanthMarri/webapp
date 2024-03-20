@@ -8,7 +8,7 @@ logging:
   processors:
     parse_java_multiline:
       type: parse_json
-      time_key:    time
+      time_key: timestamp
       time_format: "%Y-%m-%dT%H:%M:%S.%L%Z"
     extract_structure:
       type: parse_regex
