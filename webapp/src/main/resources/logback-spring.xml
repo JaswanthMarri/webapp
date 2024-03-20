@@ -1,10 +1,10 @@
 <configuration>
 
     <springProfile name="default">
-                <include resource="org/springframework/boot/logging/logback/base.xml" />
-            </springProfile>
+<!--                <include resource="org/springframework/boot/logging/logback/base.xml" />-->
+<!--            </springProfile>-->
 
-            <springProfile name="json-logs">
+<!--            <springProfile name="json-logs">-->
         <appender name="jsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
             <!--  <encoder class="net.logstash.logback.encoder.LogstashEncoder" /> -->
             <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
@@ -16,7 +16,7 @@
                 <appendLineSeparator>false</appendLineSeparator>
             </layout>
         </appender>
-        <appender name="jsonFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <appender name="jsonFile" class="ch.qos.logback.core.FileAppender">
             <file>${log.file}</file>
                 <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
                     <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
@@ -29,7 +29,7 @@
         </appender>
 
         <root level="INFO">
-<!--            <appender-ref ref="jsonConsoleAppender"/>-->
+            <appender-ref ref="jsonConsoleAppender"/>
             <appender-ref ref="jsonFile"/>
         </root>
     </springProfile>
