@@ -14,5 +14,5 @@ logging:
     service:
         pipelines:
           default_pipeline:
-            receivers: [file_logs]
+            receivers: [file-logs]
             processors: [parser-process]
