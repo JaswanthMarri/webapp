@@ -20,7 +20,7 @@ logging:
       type: modify_fields
       fields:
         severity:
-          move_from: jsonPayload.severity
+          move_from: jsonPayload.level
   service:
     pipelines:
       pipeline1:
