@@ -1,27 +1,29 @@
 <configuration>
 
     <springProfile name="default">
-        <!--        <include resource="org/springframework/boot/logging/logback/base.xml" />-->
-        <!--    </springProfile>-->
+                <include resource="org/springframework/boot/logging/logback/base.xml" />
+            </springProfile>
 
-        <!--    <springProfile name="json-logs">-->
-<!--        <appender name="jsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">-->
-<!--            &lt;!&ndash;  <encoder class="net.logstash.logback.encoder.LogstashEncoder" /> &ndash;&gt;-->
-<!--            <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">-->
-<!--                <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">-->
-<!--                    <prettyPrint>false</prettyPrint>-->
-<!--                </jsonFormatter>-->
+            <springProfile name="json-logs">
+        <appender name="jsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+            <!--  <encoder class="net.logstash.logback.encoder.LogstashEncoder" /> -->
+            <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+                <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+                    <prettyPrint>false</prettyPrint>
+                </jsonFormatter>
 <!--                <timestampFormat>dd.MM.yyyy' 'HH.mm:ss.SSS</timestampFormat>-->
-<!--                <appendLineSeparator>false</appendLineSeparator>-->
-<!--            </layout>-->
-<!--        </appender>-->
-        <appender name="jsonFile" class="ch.qos.logback.core.FileAppender">
+                <timestampFormat>yyyy-MM-dd'T'HH:mm:ss.SSSZ</timestampFormat>
+                <appendLineSeparator>false</appendLineSeparator>
+            </layout>
+        </appender>
+        <appender name="jsonFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <file>${log.file}</file>
                 <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
                     <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
                         <prettyPrint>false</prettyPrint>
                     </jsonFormatter>
-                    <timestampFormat>dd.MM.yyyy' 'HH.mm:ss.SSS</timestampFormat>
+<!--                    <timestampFormat>dd.MM.yyyy' 'HH.mm:ss.SSS</timestampFormat>-->
+                    <timestampFormat>yyyy-MM-dd'T'HH:mm:ss.SSSZ</timestampFormat>
                     <appendLineSeparator>false</appendLineSeparator>
                 </layout>
         </appender>
