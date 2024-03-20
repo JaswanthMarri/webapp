@@ -5,16 +5,16 @@
         <!--    </springProfile>-->
 
         <!--    <springProfile name="json-logs">-->
-        <appender name="jsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
-            <!--  <encoder class="net.logstash.logback.encoder.LogstashEncoder" /> -->
-            <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
-                <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
-                    <prettyPrint>true</prettyPrint>
-                </jsonFormatter>
-                <timestampFormat>dd.MM.yyyy' 'HH.mm:ss.SSS</timestampFormat>
-                <appendLineSeparator>false</appendLineSeparator>
-            </layout>
-        </appender>
+<!--        <appender name="jsonConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--            &lt;!&ndash;  <encoder class="net.logstash.logback.encoder.LogstashEncoder" /> &ndash;&gt;-->
+<!--            <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">-->
+<!--                <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">-->
+<!--                    <prettyPrint>false</prettyPrint>-->
+<!--                </jsonFormatter>-->
+<!--                <timestampFormat>dd.MM.yyyy' 'HH.mm:ss.SSS</timestampFormat>-->
+<!--                <appendLineSeparator>false</appendLineSeparator>-->
+<!--            </layout>-->
+<!--        </appender>-->
         <appender name="jsonFile" class="ch.qos.logback.core.FileAppender">
             <file>${log.file}</file>
                 <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
@@ -27,7 +27,7 @@
         </appender>
 
         <root level="INFO">
-            <appender-ref ref="jsonConsoleAppender"/>
+<!--            <appender-ref ref="jsonConsoleAppender"/>-->
             <appender-ref ref="jsonFile"/>
         </root>
     </springProfile>
