@@ -1,10 +1,11 @@
 logging:
   receivers:
-    custom_file1:
+    custom_file:
       type: files
       include_paths:
       - /var/log/myapp/my-app.log
   service:
     pipelines:
       pipeline1:
-        receivers: [custom_file1]
+        receivers: [custom_file]
+
