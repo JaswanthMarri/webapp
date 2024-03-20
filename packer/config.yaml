@@ -1,0 +1,15 @@
+logging:
+    receivers:
+        my-app-receiver-ko:
+            type: files
+            include_paths:
+            - /var/log/myapp/my-app.log
+            record_log_file_path: true
+    processors:
+        json-parse:
+            type: parse_json
+    service:
+        pipelines:
+            default_pipeline:
+                receivers: [my-app-receiver-ko]
+                processors: [json-parse]
