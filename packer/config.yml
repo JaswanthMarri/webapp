@@ -1,11 +1,19 @@
 logging:
   receivers:
-    custom_file:
+    my-app-receiver:
       type: files
       include_paths:
       - /var/log/myapp/my-app.log
+      record_log_file_path: true
+  processors:
+    extract_structure:
+      type: parse_regex
+      field: message
+      regex: '^\\{"timestamp":"(?<time>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}-\\d{4})","level":"(?<severity>[^"]+)","thread":"(?<thread>[^"]+)","logger":"(?<logger>[^"]+)","message":"(?<message>[^"]+)","context":"(?<context>[^"]+)"\\}$'
+      time_key: time
+      time_format: '%Y-%m-%dT%H:%M:%S.%L'
   service:
     pipelines:
-      pipeline1:
-        receivers: [custom_file]
-
+      default_pipeline:
+        receivers: [my-app-receiver]
+        processors: [extract_structure]
