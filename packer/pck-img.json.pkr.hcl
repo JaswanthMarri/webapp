@@ -78,7 +78,7 @@ build {
 
   provisioner "file" {
     destination = "/tmp/config.yml"
-    source      = "./packer/config.yml"
+    source      = "./packer/config.yaml"
   }
   
   provisioner "shell" {
