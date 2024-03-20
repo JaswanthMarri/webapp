@@ -20,3 +20,4 @@ logging:
             default_pipeline:
                 receivers: [my-app-receiver-ko]
                 processors: [json-parse,move-severity]
+
