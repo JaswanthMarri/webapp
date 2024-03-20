@@ -1,18 +1,11 @@
 logging:
   receivers:
-    custom_file1:
+    custom_file:
       type: files
       include_paths:
       - /var/log/myapp/my-app.log
-      record_log_file_path: true
-  processors:
-    move_severity:
-      type: modify_fields
-      fields:
-        severity:
-          copy_from: jsonPayload.level
   service:
     pipelines:
       pipeline1:
-        receivers: [custom_file1]
-        processors: [move_severity]
+        receivers: [custom_file]
+
