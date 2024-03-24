@@ -27,7 +27,7 @@ public class WebAppController {
   @Autowired private Pubsub pubsub;
 
   @Value("${pubsub.skip:true}")
-  private boolean skipTesting;
+  private boolean isExecuted;
 
   @GetMapping("/healthz")
   public ResponseEntity<Void> dbHealthCheck() {
@@ -41,7 +41,10 @@ public class WebAppController {
     UserResponse createdUser = null;
     try {
       createdUser = userService.createUser(createUserRequest);
-      pubsub.publishMessage("jaswanth","marri");
+      if(isExecuted){
+        pubsub.publishMessage("jaswanth","marri");
+      }
+
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }
@@ -61,7 +64,7 @@ public class WebAppController {
 
   @PutMapping("/v1/user/self")
   public ResponseEntity<String> updateUser(@RequestBody @Valid UserUpdateDTO updateUserRequest) {
-   if(!userService.hasVerified() && skipTesting){
+   if(!userService.hasVerified() && isExecuted){
      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
    }
     if (!userService.updateUser(updateUserRequest)) {
@@ -72,7 +75,7 @@ public class WebAppController {
 
   @GetMapping("/v1/user/self")
   public ResponseEntity<UserResponse> getUser() {
-    if(!userService.hasVerified() && skipTesting){
+    if(!userService.hasVerified() && isExecuted){
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
     UserResponse user = userService.getUser();
