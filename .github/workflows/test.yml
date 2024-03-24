@@ -44,5 +44,5 @@ jobs:
     - name: list directory
       run: ls -l
     - name: Run Tests
-      run: mvn -B test -P qa --file ./webapp/pom.xml -Dlog.file=./var/log/myapp/my-app.log
+      run: mvn -B test --file ./webapp/pom.xml -Dlog.file=./var/log/myapp/my-app.log
 
