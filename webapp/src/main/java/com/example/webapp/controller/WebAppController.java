@@ -29,6 +29,7 @@ public class WebAppController {
   @Value("${pubsub.skip:true}")
   private boolean isExecuted;
 
+
   @GetMapping("/healthz")
   public ResponseEntity<Void> dbHealthCheck() {
     LOGGER.info("Hello, this is a structured log message!");
@@ -44,7 +45,6 @@ public class WebAppController {
       if(isExecuted){
         pubsub.publishMessage("jaswanth","marri");
       }
-
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }
