@@ -105,4 +105,9 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
     UserAccount userAccount = userRepo.findByUsername(user.getUsername());
     return userAccount;
   }
-}
+
+  public boolean hasVerified() {
+    UserAccount user = userRepo.findByUsername(utils.getUserName());
+    return user.getIsVerfied();
+  }
+  }
