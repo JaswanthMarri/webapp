@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.UUID;
 import javax.persistence.*;
+
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -28,6 +30,8 @@ public class UserAccount implements UserDetails {
     private String firstName;
 
     private String lastName;
+
+    private Boolean isVerfied = false;
 
     @CreationTimestamp
     @Column(name = "account_created")

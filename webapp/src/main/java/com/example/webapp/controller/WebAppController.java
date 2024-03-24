@@ -5,9 +5,12 @@ import com.example.webapp.dto.UserResponse;
 import com.example.webapp.dto.UserUpdateDTO;
 import com.example.webapp.service.UserService;
 import javax.validation.Valid;
+
+import com.example.webapp.util.Pubsub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,10 @@ public class WebAppController {
 
   @Autowired private UserService userService;
   private static final Logger LOGGER = LoggerFactory.getLogger(WebAppController.class);
+  @Autowired private Pubsub pubsub;
+
+  @Value("${pubsub.skip:true}")
+  private boolean skipTesting;
 
   @GetMapping("/healthz")
   public ResponseEntity<Void> dbHealthCheck() {
@@ -34,6 +41,7 @@ public class WebAppController {
     UserResponse createdUser = null;
     try {
       createdUser = userService.createUser(createUserRequest);
+      pubsub.publishMessage("jaswanth","marri");
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }
@@ -53,6 +61,9 @@ public class WebAppController {
 
   @PutMapping("/v1/user/self")
   public ResponseEntity<String> updateUser(@RequestBody @Valid UserUpdateDTO updateUserRequest) {
+   if(!userService.hasVerified() && skipTesting){
+     return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+   }
     if (!userService.updateUser(updateUserRequest)) {
       return ResponseEntity.badRequest().build();
     }
@@ -61,6 +72,9 @@ public class WebAppController {
 
   @GetMapping("/v1/user/self")
   public ResponseEntity<UserResponse> getUser() {
+    if(!userService.hasVerified() && skipTesting){
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
     UserResponse user = userService.getUser();
     return new ResponseEntity<UserResponse>(user, HttpStatus.OK);
   }
