@@ -4,9 +4,9 @@ import com.example.webapp.dto.UserDTO;
 import com.example.webapp.dto.UserResponse;
 import com.example.webapp.dto.UserUpdateDTO;
 import com.example.webapp.service.UserService;
-import javax.validation.Valid;
-
 import com.example.webapp.util.Pubsub;
+import javax.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.apache.commons.lang3.StringUtils;
+import javax.servlet.http.HttpServletResponse;
+
 
 @Controller
 @Validated
-// @Slf4j
+@Slf4j
 public class WebAppController {
 
   @Autowired private UserService userService;
@@ -28,7 +31,6 @@ public class WebAppController {
 
   @Value("${pubsub.skip:true}")
   private boolean isExecuted;
-
 
   @GetMapping("/healthz")
   public ResponseEntity<Void> dbHealthCheck() {
@@ -42,10 +44,11 @@ public class WebAppController {
     UserResponse createdUser = null;
     try {
       createdUser = userService.createUser(createUserRequest);
-      if(isExecuted){
-        pubsub.publishMessage("jaswanth","marri");
+      if (isExecuted) {
+        pubsub.publishMessage(createdUser.getFirstName(), createdUser.getUsername());
       }
     } catch (Exception e) {
+      log.info(e.getMessage());
       return ResponseEntity.badRequest().build();
     }
     return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
@@ -64,9 +67,9 @@ public class WebAppController {
 
   @PutMapping("/v1/user/self")
   public ResponseEntity<String> updateUser(@RequestBody @Valid UserUpdateDTO updateUserRequest) {
-   if(!userService.hasVerified() && isExecuted){
-     return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-   }
+    if (!userService.hasVerified() && isExecuted) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
     if (!userService.updateUser(updateUserRequest)) {
       return ResponseEntity.badRequest().build();
     }
@@ -75,10 +78,24 @@ public class WebAppController {
 
   @GetMapping("/v1/user/self")
   public ResponseEntity<UserResponse> getUser() {
-    if(!userService.hasVerified() && isExecuted){
+    if (!userService.hasVerified() && isExecuted) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
     UserResponse user = userService.getUser();
     return new ResponseEntity<UserResponse>(user, HttpStatus.OK);
   }
+
+  @PostMapping("/v1/user/register")
+  public ResponseEntity verifyUser(@RequestParam("token") String token) {
+    // Implement logic to handle user registration
+    if(StringUtils.isBlank(token)){
+      return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    }
+    if(!userService.verifyUser(token)){
+      return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    }
+    return new ResponseEntity(HttpStatus.OK);
+  }
+
+
 }

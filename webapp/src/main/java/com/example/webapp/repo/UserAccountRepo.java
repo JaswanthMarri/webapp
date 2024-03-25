@@ -6,5 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //@Repository
 public interface UserAccountRepo extends JpaRepository<UserAccount, UserAccount> {
     UserAccount findByUsername(String email);
+
+    UserAccount findByToken(String tkn);
 }
 
