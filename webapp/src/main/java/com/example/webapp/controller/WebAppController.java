@@ -16,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.apache.commons.lang3.StringUtils;
+import javax.servlet.http.HttpServletResponse;
+
 
 @Controller
 @Validated
@@ -85,7 +88,12 @@ public class WebAppController {
   @PostMapping("/v1/user/register")
   public ResponseEntity verifyUser(@RequestParam("token") String token) {
     // Implement logic to handle user registration
-    userService.verifyUser(token);
+    if(StringUtils.isBlank(token)){
+      return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    }
+    if(!userService.verifyUser(token)){
+      return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+    }
     return new ResponseEntity(HttpStatus.OK);
   }
 

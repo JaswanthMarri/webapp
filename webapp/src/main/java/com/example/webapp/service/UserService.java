@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
-import java.util.UUID;
 import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,8 +84,8 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
       }
       user.setLastName(userReq.getLastName());
       user.setFirstName(userReq.getFirstName());
-//      user.setToken(createToken());
-//      user.setTokenExpTime(LocalDateTime.now().plusSeconds(120));
+      //      user.setToken(createToken());
+      //      user.setTokenExpTime(LocalDateTime.now().plusSeconds(120));
       userRepo.save(user);
       return true;
     }
@@ -114,12 +113,19 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
     return user.getIsVerfied();
   }
 
-//  public String createToken() {
-//    return UUID.randomUUID().toString();
-//  }
+  //  public String createToken() {
+  //    return UUID.randomUUID().toString();
+  //  }
 
   public boolean verifyUser(String tkn) {
+    UserAccount user = userRepo.findByToken(tkn);
 
+    if (user != null) {
+      if (LocalDateTime.now().isAfter(user.getTokenExpTime())) {
+        return false;
+      }
+      user.setIsVerfied(true);
+    }
     return true;
   }
 }
