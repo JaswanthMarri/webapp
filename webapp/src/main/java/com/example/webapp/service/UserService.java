@@ -9,8 +9,9 @@ import com.example.webapp.util.Utils;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import javax.sql.DataSource;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -23,7 +24,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-//@Slf4j
+// @Slf4j
 @Service
 public class UserService implements UserDetailsService, UserDetailsPasswordService {
 
@@ -53,7 +54,7 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
     try (Connection conn = ds.getConnection()) {
       Statement stmt = conn.createStatement();
     } catch (SQLException ex) {
-      //log.info(ex.getMessage());
+      // log.info(ex.getMessage());
       return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
           .headers(noCacheHeaders())
           .build();
@@ -76,7 +77,7 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
 
   public boolean updateUser(UserUpdateDTO userReq) {
     UserAccount user = userRepo.findByUsername(utils.getUserName());
-    if (user != null){
+    if (user != null) {
       // && userReq.getUsername().toLowerCase().equals(user.getUsername().toLowerCase())) {
       //      UserAccount updatedUser = utils.convertUserDTOToEntity(userReq);
       if (userReq.getPassword() != null && !userReq.getPassword().isBlank()) {
@@ -84,6 +85,8 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
       }
       user.setLastName(userReq.getLastName());
       user.setFirstName(userReq.getFirstName());
+//      user.setToken(createToken());
+//      user.setTokenExpTime(LocalDateTime.now().plusSeconds(120));
       userRepo.save(user);
       return true;
     }
@@ -110,4 +113,13 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
     UserAccount user = userRepo.findByUsername(utils.getUserName());
     return user.getIsVerfied();
   }
+
+//  public String createToken() {
+//    return UUID.randomUUID().toString();
+//  }
+
+  public boolean verifyUser(String tkn) {
+
+    return true;
   }
+}

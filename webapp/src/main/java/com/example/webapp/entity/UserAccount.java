@@ -33,6 +33,11 @@ public class UserAccount implements UserDetails {
 
     private Boolean isVerfied = false;
 
+    private String token;
+
+    private LocalDateTime tokenExpTime;
+
+    private String link;
     @CreationTimestamp
     @Column(name = "account_created")
     private LocalDateTime accountCreated;
