@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.UUID;
 import javax.persistence.*;
-
-import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,65 +12,67 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @Entity
-@Table(name="useraccount")
+@Table(name = "useraccount")
 public class UserAccount implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id")
+  private UUID id;
 
-    @Column(unique = true)
-    private String username;
+  @Column(unique = true)
+  private String username;
 
-    private String password;
+  private String password;
 
-    private String firstName;
+  private String firstName;
 
-    private String lastName;
+  private String lastName;
 
-    private Boolean isVerfied = false;
+  private Boolean isVerfied = false;
 
-    private String token;
+  @Column(unique = true)
+  private String token;
 
-    private LocalDateTime tokenExpTime;
+  private LocalDateTime tokenExpTime;
 
-    private String link;
-    @CreationTimestamp
-    @Column(name = "account_created")
-    private LocalDateTime accountCreated;
+  private String link;
 
-    @UpdateTimestamp
-    @Column(name = "account_updated")
-    private LocalDateTime accountUpdated;
+  @CreationTimestamp
+  @Column(name = "account_created")
+  private LocalDateTime accountCreated;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
+  @UpdateTimestamp
+  @Column(name = "account_updated")
+  private LocalDateTime accountUpdated;
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return null;
+  }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+  @Override
+  public String getUsername() {
+    return username;
+  }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 }
