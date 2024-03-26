@@ -120,6 +120,7 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
   //  }
 
   public boolean verifyUser(String tkn) {
+    log.info(tkn);
     UserAccount user = userRepo.findByToken(tkn);
 
     if (user == null) {
