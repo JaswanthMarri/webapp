@@ -55,10 +55,10 @@ public class WebAppController {
   }
 
   @GetMapping("/v1/user")
-  @PutMapping({"/v1/user", "/healthz"})
-  @PostMapping({"/v1/user/self", "/healthz"})
-  @DeleteMapping({"/v1/user", "/v1/user/self", "/healthz"})
-  @PatchMapping({"/v1/user", "/v1/user/self", "/healthz"})
+  @PutMapping({"/v1/user", "/healthz","/v1/register"})
+  @PostMapping({"/v1/user/self", "/healthz","/v1/register"})
+  @DeleteMapping({"/v1/user", "/v1/user/self", "/healthz","/v1/register"})
+  @PatchMapping({"/v1/user", "/v1/user/self", "/healthz","/v1/register"})
   public ResponseEntity<Void> handleUnsupportedMethods() {
     return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
         .headers(userService.noCacheHeaders())
@@ -85,7 +85,7 @@ public class WebAppController {
     return new ResponseEntity<UserResponse>(user, HttpStatus.OK);
   }
 
-  @PostMapping("/v1/user/register")
+  @GetMapping("/v1/register")
   public ResponseEntity verifyUser(@RequestParam("token") String token) {
     // Implement logic to handle user registration
     if(StringUtils.isBlank(token)){
@@ -96,6 +96,5 @@ public class WebAppController {
     }
     return new ResponseEntity(HttpStatus.OK);
   }
-
 
 }
