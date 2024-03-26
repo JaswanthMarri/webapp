@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 
 @Slf4j
+@Service
 public class UserService implements UserDetailsService, UserDetailsPasswordService {
 
   private final UserAccountRepo userRepo;
