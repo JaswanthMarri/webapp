@@ -89,9 +89,11 @@ public class WebAppController {
   public ResponseEntity verifyUser(@RequestParam("token") String token) {
     // Implement logic to handle user registration
     if(StringUtils.isBlank(token)){
+      log.info("Token is empty");
       return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
     if(!userService.verifyUser(token)){
+      log.info("Token is invalid");
       return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
     return new ResponseEntity(HttpStatus.OK);
