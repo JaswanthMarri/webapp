@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import javax.sql.DataSource;
-
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
- @Slf4j
+
+@Slf4j
 @Service
 public class UserService implements UserDetailsService, UserDetailsPasswordService {
 
@@ -122,17 +122,20 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
   public boolean verifyUser(String tkn) {
     UserAccount user = userRepo.findByToken(tkn);
 
-    if (user != null) {
-      if (LocalDateTime.now().isAfter(user.getTokenExpTime())) {
-        log.info(String.valueOf(LocalDateTime.now()));
-        log.info("-----------------------------");
-        log.info(user.getTokenExpTime().toString());
-        return false;
-      }
-      log.info("user is verified");
-      user.setIsVerfied(true);
+    if (user == null) {
+      log.info("User not found");
+      return false;
     }
-    log.info("User not found");
-    return false;
+
+    if (LocalDateTime.now().isAfter(user.getTokenExpTime())) {
+      log.info(String.valueOf(LocalDateTime.now()));
+      log.info("-----------------------------");
+      log.info(user.getTokenExpTime().toString());
+      return false;
+    }
+    log.info("user is verified");
+    user.setIsVerfied(true);
+    userRepo.save(user);
+    return true;
   }
 }
