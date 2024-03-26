@@ -132,7 +132,7 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
       log.info("user is verified");
       user.setIsVerfied(true);
     }
-    log.info("User ot found");
+    log.info("User not found");
     return false;
   }
 }
