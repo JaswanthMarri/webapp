@@ -124,7 +124,6 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
       if (LocalDateTime.now().isAfter(user.getTokenExpTime())) {
         return false;
       }
-
       user.setIsVerfied(true);
     }
     return false;
