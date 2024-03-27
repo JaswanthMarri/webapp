@@ -24,6 +24,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 @Slf4j
 @Service
 public class UserService implements UserDetailsService, UserDetailsPasswordService {
@@ -119,6 +120,7 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
   //  }
 
   public ResponseEntity verifyUser(String tkn) {
+
     log.info(tkn);
     UserAccount user = userRepo.findByToken(tkn);
 
@@ -132,6 +134,7 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
       log.info("-----------------------------");
       log.info(user.getTokenExpTime().toString());
       return new ResponseEntity("Token Expired!", HttpStatus.UNAUTHORIZED);
+
     }
     if (user.getIsVerfied()) {
       return new ResponseEntity("User is already verified!", HttpStatus.OK);
