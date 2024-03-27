@@ -126,16 +126,15 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
       log.info("User not found or token is invalid");
       return new ResponseEntity<>("User not found, Please create a user! or Token is invalid, Please check", HttpStatus.UNAUTHORIZED);
     }
-    if (user.getIsVerfied()) {
-      return new ResponseEntity("User is already verified!", HttpStatus.OK);
-    }
-
     if (LocalDateTime.now().isAfter(user.getTokenExpTime())) {
       log.info("User token expired");
       log.info(String.valueOf(LocalDateTime.now()));
       log.info("-----------------------------");
       log.info(user.getTokenExpTime().toString());
       return new ResponseEntity("Token Expired!", HttpStatus.UNAUTHORIZED);
+    }
+    if (user.getIsVerfied()) {
+      return new ResponseEntity("User is already verified!", HttpStatus.OK);
     }
     log.info("user is verified");
     user.setIsVerfied(true);
