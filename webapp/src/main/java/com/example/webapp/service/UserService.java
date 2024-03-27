@@ -24,7 +24,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 @Slf4j
 @Service
 public class UserService implements UserDetailsService, UserDetailsPasswordService {
@@ -119,24 +118,28 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
   //    return UUID.randomUUID().toString();
   //  }
 
-  public boolean verifyUser(String tkn) {
+  public ResponseEntity verifyUser(String tkn) {
     log.info(tkn);
     UserAccount user = userRepo.findByToken(tkn);
 
     if (user == null) {
-      log.info("User not found");
-      return false;
+      log.info("User not found or token is invalid");
+      return new ResponseEntity<>("User not found, Please create a user! or Token is invalid, Please check", HttpStatus.UNAUTHORIZED);
+    }
+    if (user.getIsVerfied()) {
+      return new ResponseEntity("User is already verified!", HttpStatus.OK);
     }
 
     if (LocalDateTime.now().isAfter(user.getTokenExpTime())) {
+      log.info("User token expired");
       log.info(String.valueOf(LocalDateTime.now()));
       log.info("-----------------------------");
       log.info(user.getTokenExpTime().toString());
-      return false;
+      return new ResponseEntity("Token Expired!", HttpStatus.UNAUTHORIZED);
     }
     log.info("user is verified");
     user.setIsVerfied(true);
     userRepo.save(user);
-    return true;
+    return new ResponseEntity("User is verified", HttpStatus.OK);
   }
 }

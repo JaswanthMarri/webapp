@@ -7,6 +7,7 @@ import com.example.webapp.service.UserService;
 import com.example.webapp.util.Pubsub;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.apache.commons.lang3.StringUtils;
-import javax.servlet.http.HttpServletResponse;
-
 
 @Controller
 @Validated
@@ -55,10 +53,10 @@ public class WebAppController {
   }
 
   @GetMapping("/v1/user")
-  @PutMapping({"/v1/user", "/healthz","/v1/register"})
-  @PostMapping({"/v1/user/self", "/healthz","/v1/register"})
-  @DeleteMapping({"/v1/user", "/v1/user/self", "/healthz","/v1/register"})
-  @PatchMapping({"/v1/user", "/v1/user/self", "/healthz","/v1/register"})
+  @PutMapping({"/v1/user", "/healthz", "/v1/register"})
+  @PostMapping({"/v1/user/self", "/healthz", "/v1/register"})
+  @DeleteMapping({"/v1/user", "/v1/user/self", "/healthz", "/v1/register"})
+  @PatchMapping({"/v1/user", "/v1/user/self", "/healthz", "/v1/register"})
   public ResponseEntity<Void> handleUnsupportedMethods() {
     return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
         .headers(userService.noCacheHeaders())
@@ -88,15 +86,10 @@ public class WebAppController {
   @GetMapping("/v1/register")
   public ResponseEntity verifyUser(@RequestParam("token") String token) {
     // Implement logic to handle user registration
-    if(StringUtils.isBlank(token)){
+    if (StringUtils.isBlank(token)) {
       log.info("Token is empty");
-      return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity("Token is invalid",HttpStatus.UNAUTHORIZED);
     }
-    if(!userService.verifyUser(token)){
-      log.info("Token is invalid");
-      return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-    }
-    return new ResponseEntity(HttpStatus.OK);
+    return userService.verifyUser(token);
   }
-
 }
