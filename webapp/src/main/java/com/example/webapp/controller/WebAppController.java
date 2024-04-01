@@ -6,7 +6,6 @@ import com.example.webapp.dto.UserUpdateDTO;
 import com.example.webapp.service.UserService;
 import com.example.webapp.util.Pubsub;
 import javax.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Validated
-@Slf4j
+// @Slf4j
 public class WebAppController {
 
   @Autowired private UserService userService;
@@ -46,7 +45,7 @@ public class WebAppController {
         pubsub.publishMessage(createdUser.getFirstName(), createdUser.getUsername());
       }
     } catch (Exception e) {
-      log.info(e.getMessage());
+      LOGGER.info(e.getMessage());
       return ResponseEntity.badRequest().build();
     }
     return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
@@ -87,8 +86,8 @@ public class WebAppController {
   public ResponseEntity verifyUser(@RequestParam("token") String token) {
     // Implement logic to handle user registration
     if (StringUtils.isBlank(token)) {
-      log.info("Token is empty");
-      return new ResponseEntity("Token is invalid",HttpStatus.UNAUTHORIZED);
+      LOGGER.info("Token is empty");
+      return new ResponseEntity("Token is invalid", HttpStatus.UNAUTHORIZED);
     }
     return userService.verifyUser(token);
   }

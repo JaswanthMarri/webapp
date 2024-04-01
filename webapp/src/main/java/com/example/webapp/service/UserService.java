@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import javax.sql.DataSource;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -24,8 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
-@Slf4j
+// @Slf4j
 @Service
 public class UserService implements UserDetailsService, UserDetailsPasswordService {
 
@@ -33,6 +31,7 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
   private final Utils utils;
   private final BCryptPasswordEncoder passwordEncoder;
   private final DataSource ds;
+  private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
   public UserService(
       UserAccountRepo userRepo, Utils utils, BCryptPasswordEncoder passwordEncoder, DataSource ds) {
@@ -121,26 +120,26 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
 
   public ResponseEntity verifyUser(String tkn) {
 
-    log.info(tkn);
+    LOGGER.info(tkn);
     UserAccount user = userRepo.findByToken(tkn);
 
     if (user == null) {
-      log.info("User not found or token is invalid");
-      return new ResponseEntity<>("User not found, Please create a user! or Token is invalid, Please check", HttpStatus.UNAUTHORIZED);
-
+      LOGGER.info("User not found or token is invalid");
+      return new ResponseEntity<>(
+          "User not found, Please create a user! or Token is invalid, Please check",
+          HttpStatus.UNAUTHORIZED);
     }
     if (LocalDateTime.now().isAfter(user.getTokenExpTime())) {
-      log.info("User token expired");
-      log.info(String.valueOf(LocalDateTime.now()));
-      log.info("-----------------------------");
-      log.info(user.getTokenExpTime().toString());
+      LOGGER.info("User token expired");
+      LOGGER.info(String.valueOf(LocalDateTime.now()));
+      LOGGER.info("-----------------------------");
+      LOGGER.info(user.getTokenExpTime().toString());
       return new ResponseEntity("Token Expired!", HttpStatus.UNAUTHORIZED);
     }
     if (user.getIsVerfied()) {
       return new ResponseEntity("User is already verified!", HttpStatus.OK);
-
     }
-    log.info("user is verified");
+    LOGGER.info("user is verified");
     user.setIsVerfied(true);
     userRepo.save(user);
     return new ResponseEntity("User is verified", HttpStatus.OK);
