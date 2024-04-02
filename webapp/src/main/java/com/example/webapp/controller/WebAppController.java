@@ -88,6 +88,7 @@ public class WebAppController {
     if (StringUtils.isBlank(token)) {
       LOGGER.info("Token is empty");
       return new ResponseEntity("Token is invalid", HttpStatus.FORBIDDEN);
+
     }
     return userService.verifyUser(token);
   }
