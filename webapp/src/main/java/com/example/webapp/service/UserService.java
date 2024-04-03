@@ -135,7 +135,6 @@ public class UserService implements UserDetailsService, UserDetailsPasswordServi
       LOGGER.info("-----------------------------");
       LOGGER.info(user.getTokenExpTime().toString());
       return new ResponseEntity("Token Expired!", HttpStatus.FORBIDDEN);
-
     }
     if (user.getIsVerfied()) {
       return new ResponseEntity("User is already verified!", HttpStatus.OK);
