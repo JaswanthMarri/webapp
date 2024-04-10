@@ -82,3 +82,19 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v2'
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
+      - name: 'get secret username'
+        run: |
+          username_secret_value=$(gcloud secrets versions access latest --secret="sql-username")
+          echo "::set-output name=username_secret_value::$username_secret_value"
+      - name: 'get secret password'
+        run: |
+          password_secret_value=$(gcloud secrets versions access latest --secret="sql-password")
+          echo "::set-output name=password_secret_value::$password_secret_value"
+      - name: 'get secret ip'
+        run: |
+          ip_secret_value=$(gcloud secrets versions access latest --secret="sql-db-ip")
+          echo "::set-output name=ip_secret_value::$ip_secret_value"
+      - name: 'get secret db-name'
+        run: |
+          db_secret_value=$(gcloud secrets versions access latest --secret="sql-db-ip")
+          echo "::set-output name=db_secret_value::$db_secret_value"
