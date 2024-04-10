@@ -137,8 +137,6 @@ jobs:
             --image="projects/cloud-nw-dev/global/images/custom-image-with-db" \
             --can-ip-forward \
             --machine-type="e2-standard-2" \
-            --network=${{ steps.vpc.outputs.vpc_name_secret_value }} \
-            --subnet=${{ steps.subnet.outputs.vpc_subnet_name_secret_value }} \
             --network-interface=network-tier=PREMIUM,queue-count=0,stack-type="IPV4_ONLY",network=${{ steps.vpc.outputs.vpc_name_secret_value }},subnet=${{ steps.subnet.outputs.vpc_subnet_name_secret_value }} \
             --maintenance-policy=MIGRATE \
             --provisioning-model=STANDARD \
