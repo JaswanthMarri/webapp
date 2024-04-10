@@ -69,6 +69,7 @@ jobs:
         run: |
           packer build -force ./packer/pck-img.json.pkr.hcl
 
+
   gcp_cli:
     runs-on: ubuntu-latest
     steps:
