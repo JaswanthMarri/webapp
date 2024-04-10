@@ -114,6 +114,9 @@ jobs:
         run: |
           vpc_subnet_name_secret_value=$(gcloud secrets versions access latest --secret="vpc-subnet-name")
           echo "::set-output name=vpc_subnet_name_secret_value::$vpc_subnet_name_secret_value"
+      - name: Use Secret Value
+        run: |
+          echo "The secret value is ${{ steps.get_secret.outputs.vpc_subnet_name_secret_value }}  ${{ steps.get_secret.outputs.vpc_name_secret_value }}"
       - name: 'Create Instance Template'
         run: |
           gcloud compute instance-templates create NAME \
