@@ -83,55 +83,63 @@ jobs:
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
       - name: 'get secret username'
+        id: username
         run: |
           username_secret_value=$(gcloud secrets versions access latest --secret="sql-username")
           echo "::set-output name=username_secret_value::$username_secret_value"
       - name: 'get secret password'
+        id: password
         run: |
           password_secret_value=$(gcloud secrets versions access latest --secret="sql-password")
           echo "::set-output name=password_secret_value::$password_secret_value"
       - name: 'get secret ip'
+        id: ip
         run: |
           ip_secret_value=$(gcloud secrets versions access latest --secret="sql-db-ip")
           echo "::set-output name=ip_secret_value::$ip_secret_value"
       - name: 'get secret db-name'
+        id: db_name
         run: |
           db_secret_value=$(gcloud secrets versions access latest --secret="sql-db-ip")
           echo "::set-output name=db_secret_value::$db_secret_value"
       - name: 'get secret vm sa'
+        id: sa
         run: |
           vm_sa_secret_value=$(gcloud secrets versions access latest --secret="vm-sa")
           echo "::set-output name=vm_sa_secret_value::$vm_sa_secret_value"
       - name: 'get secret vm kms'
+        id: kms
         run: |
           vm_kms_secret_value=$(gcloud secrets versions access latest --secret="vm-kms")
           echo "::set-output name=vm_kms_secret_value::$vm_kms_secret_value"
       - name: 'get secret vpc name'
+        id: vpc
         run: |
           vpc_name_secret_value=$(gcloud secrets versions access latest --secret="vpc-name")
           echo "Retrieved VPC name secret: $vpc_name_secret_value"
           echo "::set-output name=vpc_name_secret_value::$vpc_name_secret_value"
       - name: 'get secret vpc subnet'
+        id: subnet
         run: |
           vpc_subnet_name_secret_value=$(gcloud secrets versions access latest --secret="vpc-subnet-name")
           echo "Retrieved VPC subnet name secret: $vpc_subnet_name_secret_value"
           echo "::set-output name=vpc_subnet_name_secret_value::$vpc_subnet_name_secret_value"
       - name: Use Secret Value
         run: |
-          echo "The secret value is ${{ steps.get_secret.outputs.vpc_subnet_name_secret_value }}  ${{ steps.get_secret.outputs.vpc_name_secret_value }}"
+          echo "The secret value is ${{ steps.subnet.outputs.vpc_subnet_name_secret_value }}  ${{ steps.vpc.outputs.vpc_name_secret_value }}"
       - name: 'Create Instance Template'
         run: |
           gcloud compute instance-templates create NAME \
             --boot-disk-device-name=vpc-instance-cloud-webapp \
             --boot-disk-size="100GB" \
             --boot-disk-type=pd-balanced \
-            --boot-disk-kms-key=${{ steps.get_secret.outputs.vm_kms_secret_value }} \
+            --boot-disk-kms-key=${{ steps.kms.outputs.vm_kms_secret_value }} \
             --image="projects/cloud-nw-dev/global/images/custom-image-with-db" \
             --can-ip-forward \
             --machine-type="e2-standard-2" \
-            --network=${{ steps.get_secret.outputs.vpc_name_secret_value }} \
-            --subnet=${{ steps.get_secret.outputs.vpc_subnet_name_secret_value }} \
-            --network-interface=network-tier=PREMIUM,queue-count=0,stack-type="IPV4_ONLY",network=${{ steps.get_secret.outputs.vpc_name_secret_value }}, subnet=${{ steps.get_secret.outputs.vpc_subnet_name_secret_value }} \
+            --network=${{ steps.vpc.outputs.vpc_name_secret_value }} \
+            --subnet=${{ steps.subnet.outputs.vpc_subnet_name_secret_value }} \
+            --network-interface=network-tier=PREMIUM,queue-count=0,stack-type="IPV4_ONLY",network=${{ steps.vpc.outputs.vpc_name_secret_value }}, subnet=${{ steps.subnet.outputs.vpc_subnet_name_secret_value }} \
             --maintenance-policy=MIGRATE \
             --provisioning-model=STANDARD \
             --shielded-integrity-monitoring \
@@ -142,9 +150,9 @@ jobs:
           application_properties="/opt/application.properties"
           if [ ! -f "$application_properties" ]; then
             touch "$application_properties"
-            echo "spring.datasource.username=${{ steps.get_secret.outputs.username_secret_value }}" >> /opt/application.properties
-            echo "spring.datasource.password=${{ steps.get_secret.outputs.password_secret_value }}" >> /opt/application.properties
-            echo "spring.datasource.url=jdbc:postgresql://${{ steps.get_secret.outputs.ip_secret_value }}:5432/{{ steps.get_secret.outputs.db_secret_value }}" >> /opt/application.properties
+            echo "spring.datasource.username=${{ steps.username.outputs.username_secret_value }}" >> /opt/application.properties
+            echo "spring.datasource.password=${{ steps.password.outputs.password_secret_value }}" >> /opt/application.properties
+            echo "spring.datasource.url=jdbc:postgresql://${{ steps.ip.outputs.ip_secret_value }}:5432/{{ steps.db_name.outputs.db_secret_value }}" >> /opt/application.properties
             echo "spring.datasource.driver-class-name=org.postgresql.Driver" >> /opt/application.properties
             echo "server.port=8080" >> /opt/application.properties
             echo "spring.jpa.generate-ddl=true" >> /opt/application.properties
@@ -160,7 +168,7 @@ jobs:
           fi
           sudo chown -R csye6225:csye6225 /opt/
           ' \
-            --service-account=${{ steps.get_secret.outputs.vm_sa_secret_value }} \
+            --service-account=${{ steps.sa.outputs.vm_sa_secret_value }} \
             --scopes=["https://www.googleapis.com/auth/logging.admin","cloud-platform","monitoring-write","logging-write"] \
             --region="us-east1"
         
