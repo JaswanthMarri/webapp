@@ -177,3 +177,9 @@ jobs:
             --scopes="https://www.googleapis.com/auth/logging.admin","cloud-platform","monitoring-write","logging-write" \
             --region="us-east1"
         
+      - name: 'set instance-template for IGM'
+        id: IGM
+        run: |
+          gcloud compute instance-groups managed set-instance-template appserver-igm \
+            --template=webapp-${{ steps.dt_name.outputs.name_dt }} \
+            --region="us-east1"
