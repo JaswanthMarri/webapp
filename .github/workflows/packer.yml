@@ -127,9 +127,15 @@ jobs:
       - name: Use Secret Value
         run: |
           echo "The secret value is ${{ steps.subnet.outputs.vpc_subnet_name_secret_value }}  ${{ steps.vpc.outputs.vpc_name_secret_value }}"
+      - name: Get current date and time in custom format
+        id: dt_name
+        run: |
+          name_dt=$(date +"%Y-%m-%d %H:%M)
+          echo "The current date and time is $name_dt"
+          echo "::set-output name=name_dt::$name_dt"
       - name: 'Create Instance Template'
         run: |
-          gcloud compute instance-templates create NAME \
+          gcloud compute instance-templates create webapp-${{ steps.dt_name.outputs.name_dt }} \
             --boot-disk-device-name=vpc-instance-cloud-webapp \
             --boot-disk-size="100GB" \
             --boot-disk-type=pd-balanced \
