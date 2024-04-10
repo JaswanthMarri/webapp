@@ -184,3 +184,14 @@ jobs:
           gcloud compute instance-groups managed set-instance-template appserver-igm \
             --template="projects/cloud-nw-dev/regions/us-east1/instanceTemplates/webapp-${{ steps.dt_name.outputs.name_dt }}" \
             --region="us-east1"
+      - name: 'rolling update to recreate instances with new template'
+        id: recreate
+        run: |
+          gcloud compute instance-groups managed rolling-action start-update projects/cloud-nw-dev/regions/us-east1/instanceGroupManagers/appserver-igm \
+            --version=template=projects/cloud-nw-dev/regions/us-east1/instanceTemplates/webapp-${{ steps.dt_name.outputs.name_dt }}
+
+      - name: 'wait until update to recreate instances with new template'
+        id: wait
+        run: |
+          gcloud compute instance-groups managed wait-until projects/cloud-nw-dev/regions/us-east1/instanceGroupManagers/appserver-igm \
+            --version-target-reached \
