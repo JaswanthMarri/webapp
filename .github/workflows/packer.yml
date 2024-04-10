@@ -126,12 +126,12 @@ jobs:
             --machine-type="e2-standard-2" \
             --network=${{ steps.get_secret.outputs.vpc_name_secret_value }} \
             --subnet=${{ steps.get_secret.outputs.vpc_subnet_name_secret_value }} \
-            --network-interface=[network-tier=PREMIUM, queue-count=0, stack-type="IPV4_ONLY",network=${{ steps.get_secret.outputs.vpc_name_secret_value }}, subnet=${{ steps.get_secret.outputs.vpc_subnet_name_secret_value }}] \
-            ----maintenance-policy=MIGRATE \
+            --network-interface=network-tier=PREMIUM,queue-count=0,stack-type="IPV4_ONLY",network=${{ steps.get_secret.outputs.vpc_name_secret_value }}, subnet=${{ steps.get_secret.outputs.vpc_subnet_name_secret_value }} \
+            --maintenance-policy=MIGRATE \
             --provisioning-model=STANDARD \
             --shielded-integrity-monitoring \
             --shielded-vtpm \
-            --tags=["http-server","https-server","db-access","load-balanced-backend"] \
+            --tags="http-server","https-server","db-access","load-balanced-backend" \
             --metadata=startup-script='#!/bin/bash
           set -e
           application_properties="/opt/application.properties"
@@ -158,4 +158,4 @@ jobs:
             --service-account=${{ steps.get_secret.outputs.vm_sa_secret_value }} \
             --scopes=["https://www.googleapis.com/auth/logging.admin","cloud-platform","monitoring-write","logging-write"] \
             --region="us-east1"
-          
+        
