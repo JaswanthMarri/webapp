@@ -101,7 +101,7 @@ jobs:
       - name: 'get secret db-name'
         id: db_name
         run: |
-          db_secret_value=$(gcloud secrets versions access latest --secret="sql-db-ip")
+          db_secret_value=$(gcloud secrets versions access latest --secret="sql-db-name")
           echo "::set-output name=db_secret_value::$db_secret_value"
       - name: 'get secret vm sa'
         id: sa
