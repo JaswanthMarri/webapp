@@ -139,7 +139,7 @@ jobs:
             --machine-type="e2-standard-2" \
             --network=${{ steps.vpc.outputs.vpc_name_secret_value }} \
             --subnet=${{ steps.subnet.outputs.vpc_subnet_name_secret_value }} \
-            --network-interface=network-tier=PREMIUM,queue-count=0,stack-type="IPV4_ONLY",network=${{ steps.vpc.outputs.vpc_name_secret_value }}, subnet=${{ steps.subnet.outputs.vpc_subnet_name_secret_value }} \
+            --network-interface=network-tier=PREMIUM,queue-count=0,stack-type="IPV4_ONLY",network=${{ steps.vpc.outputs.vpc_name_secret_value }},subnet=${{ steps.subnet.outputs.vpc_subnet_name_secret_value }} \
             --maintenance-policy=MIGRATE \
             --provisioning-model=STANDARD \
             --shielded-integrity-monitoring \
@@ -169,6 +169,6 @@ jobs:
           sudo chown -R csye6225:csye6225 /opt/
           ' \
             --service-account=${{ steps.sa.outputs.vm_sa_secret_value }} \
-            --scopes=["https://www.googleapis.com/auth/logging.admin","cloud-platform","monitoring-write","logging-write"] \
+            --scopes="https://www.googleapis.com/auth/logging.admin","cloud-platform","monitoring-write","logging-write" \
             --region="us-east1"
         
