@@ -157,7 +157,7 @@ jobs:
             touch "$application_properties"
             echo "spring.datasource.username=${{ steps.username.outputs.username_secret_value }}" >> /opt/application.properties
             echo "spring.datasource.password=${{ steps.password.outputs.password_secret_value }}" >> /opt/application.properties
-            echo "spring.datasource.url=jdbc:postgresql://${{ steps.ip.outputs.ip_secret_value }}:5432/{{ steps.db_name.outputs.db_secret_value }}" >> /opt/application.properties
+            echo "spring.datasource.url=jdbc:postgresql://${{ steps.ip.outputs.ip_secret_value }}:5432/${{ steps.db_name.outputs.db_secret_value }}" >> /opt/application.properties
             echo "spring.datasource.driver-class-name=org.postgresql.Driver" >> /opt/application.properties
             echo "server.port=8080" >> /opt/application.properties
             echo "spring.jpa.generate-ddl=true" >> /opt/application.properties
