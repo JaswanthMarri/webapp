@@ -181,5 +181,5 @@ jobs:
         id: IGM
         run: |
           gcloud compute instance-groups managed set-instance-template appserver-igm \
-            --template=webapp-${{ steps.dt_name.outputs.name_dt }} \
+            --template="projects/cloud-nw-dev/regions/us-east1/instanceTemplates/webapp-${{ steps.dt_name.outputs.name_dt }}" \
             --region="us-east1"
