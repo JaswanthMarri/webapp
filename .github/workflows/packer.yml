@@ -102,7 +102,8 @@ jobs:
         run: |
           vm_sa_secret_value=$(gcloud secrets versions access latest --secret="vm-sa")
           echo "::set-output name=vm_sa_secret_value::$vm_sa_secret_value"
-      - name: 'get secret db-name'
+      - name: 'get secret vm kms'
         run: |
           vm_kms_secret_value=$(gcloud secrets versions access latest --secret="vm-kms")
           echo "::set-output name=vm_kms_secret_value::$vm_kms_secret_value"
+
