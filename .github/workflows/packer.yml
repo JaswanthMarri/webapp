@@ -130,7 +130,7 @@ jobs:
       - name: Get current date and time in custom format
         id: dt_name
         run: |
-          name_dt=$(date +"%Y-%m-%d %H:%M)
+          name_dt=$(date +"%Y-%m-%d-%H-%M")
           echo "The current date and time is $name_dt"
           echo "::set-output name=name_dt::$name_dt"
       - name: 'Create Instance Template'
