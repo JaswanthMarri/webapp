@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#sudo yum update -y
+sudo yum update -y
 
 if ! grep -q "^csye6225:" /etc/group; then
     sudo groupadd csye6225
