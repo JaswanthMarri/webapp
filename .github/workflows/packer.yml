@@ -109,10 +109,12 @@ jobs:
       - name: 'get secret vpc name'
         run: |
           vpc_name_secret_value=$(gcloud secrets versions access latest --secret="vpc-name")
+          echo "Retrieved VPC name secret: $vpc_name_secret_value"
           echo "::set-output name=vpc_name_secret_value::$vpc_name_secret_value"
       - name: 'get secret vpc subnet'
         run: |
           vpc_subnet_name_secret_value=$(gcloud secrets versions access latest --secret="vpc-subnet-name")
+          echo "Retrieved VPC subnet name secret: $vpc_subnet_name_secret_value"
           echo "::set-output name=vpc_subnet_name_secret_value::$vpc_subnet_name_secret_value"
       - name: Use Secret Value
         run: |
