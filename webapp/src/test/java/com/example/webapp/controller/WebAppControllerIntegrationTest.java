@@ -30,7 +30,7 @@ public class WebAppControllerIntegrationTest {
         .contentType(ContentType.JSON)
         .body(requestBody)
         .when()
-        .post("/v1/user")
+        .post("/v5/user")
         .then()
         .statusCode(201);
   }
@@ -44,7 +44,7 @@ public class WebAppControllerIntegrationTest {
         .contentType(ContentType.JSON)
         .body(requestBody)
         .when()
-        .post("/v1/user")
+        .post("/v5/user")
         .then()
         .statusCode(400);
   }
@@ -58,7 +58,7 @@ public class WebAppControllerIntegrationTest {
         .contentType(ContentType.JSON)
         .body(requestBody)
         .when()
-        .post("/v1/user")
+        .post("/v5/user")
         .then()
         .statusCode(400);
   }
@@ -72,7 +72,7 @@ public class WebAppControllerIntegrationTest {
         .contentType(ContentType.JSON)
         .body(requestBody)
         .when()
-        .post("/v1/user")
+        .post("/v5/user")
         .then()
         .statusCode(201);
 
@@ -81,7 +81,7 @@ public class WebAppControllerIntegrationTest {
         .basic("jasw@doeexample.com", "testing")
         .contentType(ContentType.JSON)
         .when()
-        .get("/v1/user/self")
+        .get("/v5/user/self")
         .then()
         .statusCode(200);
   }
@@ -96,7 +96,7 @@ public class WebAppControllerIntegrationTest {
         .contentType(ContentType.JSON)
         .body(requestBody)
         .when()
-        .post("/v1/user")
+        .post("/v5/user")
         .then()
         .statusCode(201);
     
@@ -110,7 +110,7 @@ public class WebAppControllerIntegrationTest {
         .contentType(ContentType.JSON)
         .body(updatedBody)
         .when()
-        .put("/v1/user/self")
+        .put("/v5/user/self")
         .then()
         .statusCode(204);
 
@@ -120,7 +120,7 @@ public class WebAppControllerIntegrationTest {
         .basic("jasw2@doeexample.com", "testing1")
         //.contentType(ContentType.JSON)
         .when()
-        .get("/v1/user/self")
+        .get("/v5/user/self")
         .then()
         .statusCode(200)
         .body("first_name", equalToIgnoringCase("Jaswanth"));
