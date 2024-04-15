@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.csrf()
         .disable() // Disable CSRF protection for simplicity
         .authorizeRequests()
-        .antMatchers("/v1/user/self")
+        .antMatchers("/v5/user/self")
         .authenticated() // Secure endpoints
         // .anyRequest()
         // .permitAll() // Allow all other requests without authentication

@@ -35,7 +35,7 @@ public class WebAppController {
     return userService.HealthCheckService();
   }
 
-  @PostMapping("/v1/user")
+  @PostMapping("/v5/user")
   public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserDTO createUserRequest) {
     // Implement logic to handle user registration
     UserResponse createdUser = null;
@@ -51,18 +51,18 @@ public class WebAppController {
     return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
   }
 
-  @GetMapping("/v1/user")
-  @PutMapping({"/v1/user", "/healthz", "/v1/register"})
-  @PostMapping({"/v1/user/self", "/healthz", "/v1/register"})
-  @DeleteMapping({"/v1/user", "/v1/user/self", "/healthz", "/v1/register"})
-  @PatchMapping({"/v1/user", "/v1/user/self", "/healthz", "/v1/register"})
+  @GetMapping("/v5/user")
+  @PutMapping({"/v5/user", "/healthz", "/v5/register"})
+  @PostMapping({"/v5/user/self", "/healthz", "/v5/register"})
+  @DeleteMapping({"/v5/user", "/v5/user/self", "/healthz", "/v5/register"})
+  @PatchMapping({"/v5/user", "/v5/user/self", "/healthz", "/v5/register"})
   public ResponseEntity<Void> handleUnsupportedMethods() {
     return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
         .headers(userService.noCacheHeaders())
         .build();
   }
 
-  @PutMapping("/v1/user/self")
+  @PutMapping("/v5/user/self")
   public ResponseEntity<String> updateUser(@RequestBody @Valid UserUpdateDTO updateUserRequest) {
     if (!userService.hasVerified() && isExecuted) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -73,7 +73,7 @@ public class WebAppController {
     return ResponseEntity.noContent().build();
   }
 
-  @GetMapping("/v1/user/self")
+  @GetMapping("/v5/user/self")
   public ResponseEntity<UserResponse> getUser() {
     if (!userService.hasVerified() && isExecuted) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -82,7 +82,7 @@ public class WebAppController {
     return new ResponseEntity<UserResponse>(user, HttpStatus.OK);
   }
 
-  @GetMapping("/v1/register")
+  @GetMapping("/v5/register")
   public ResponseEntity verifyUser(@RequestParam("token") String token) {
     // Implement logic to handle user registration
     if (StringUtils.isBlank(token)) {
